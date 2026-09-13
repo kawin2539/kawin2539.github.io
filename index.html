@@ -3,28 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Smart Solar Home — Interactive Blueprint v2</title>
+<title>Smart Solar Home — Interactive Blueprint</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#070b14; --panel:rgba(18,27,45,.85); --line:rgba(120,180,255,.14);
+  --bg:#070b14; --bg2:#0c1322; --panel:rgba(18,27,45,.82); --line:rgba(120,180,255,.14);
   --txt:#e8f0ff; --dim:#8aa0c4;
   --power:#ffb020; --thermal:#ff4d4d; --climate:#22d3ee; --data:#a855f7; --ok:#34d399;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--txt);font-family:'IBM Plex Sans Thai',system-ui,sans-serif;overflow-x:hidden}
-body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+body{
+  background:var(--bg); color:var(--txt);
+  font-family:'IBM Plex Sans Thai',system-ui,sans-serif; overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
-  background-size:44px 44px;mask-image:radial-gradient(ellipse 90% 70% at 50% 25%,#000 35%,transparent 100%)}
-.wrap{position:relative;z-index:1;max-width:1340px;margin:0 auto;padding:0 22px}
+  background-size:44px 44px;
+  mask-image:radial-gradient(ellipse 90% 70% at 50% 25%,#000 35%,transparent 100%);
+}
+.wrap{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:0 22px}
 .mono{font-family:'JetBrains Mono',monospace}
 
-nav{position:sticky;top:0;z-index:60;backdrop-filter:blur(18px);background:rgba(7,11,20,.8);border-bottom:1px solid var(--line)}
-nav .wrap{display:flex;align-items:center;gap:20px;height:66px}
-.logo{display:flex;align-items:center;gap:11px;font-weight:700}
+/* ---------- NAV ---------- */
+nav{position:sticky;top:0;z-index:60;backdrop-filter:blur(18px);background:rgba(7,11,20,.78);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:20px;height:64px}
+.logo{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:.3px}
 .logo i{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;
   background:linear-gradient(135deg,var(--power),var(--thermal));font-style:normal;font-size:15px}
-nav a.nl{color:var(--dim);text-decoration:none;font-size:14.5px;transition:.2s;white-space:nowrap}
+nav a.nl{color:var(--dim);text-decoration:none;font-size:14px;transition:.2s}
 nav a.nl:hover{color:var(--txt)}
 .navspacer{margin-left:auto;display:flex;gap:10px;align-items:center}
 .lang{display:flex;border:1px solid var(--line);border-radius:99px;overflow:hidden}
@@ -35,173 +42,132 @@ nav a.nl:hover{color:var(--txt)}
 .btn-p:hover{transform:translateY(-2px);box-shadow:0 12px 34px rgba(255,150,40,.42)}
 .btn-g{background:rgba(255,255,255,.05);color:var(--txt);border:1px solid var(--line)}
 .btn-g:hover{background:rgba(255,255,255,.1)}
-.btn-v{background:rgba(168,85,247,.14);color:#d8b4fe;border:1px solid rgba(168,85,247,.4)}
-.btn-v:hover{background:rgba(168,85,247,.25)}
 
+/* ---------- HERO ---------- */
 header{padding:86px 0 56px;text-align:center}
 .pill{display:inline-flex;gap:9px;align-items:center;border:1px solid rgba(255,176,32,.3);
-  background:rgba(255,176,32,.08);color:var(--power);padding:7px 16px;border-radius:99px;font-size:13px;margin-bottom:26px}
+  background:rgba(255,176,32,.08);color:var(--power);padding:7px 16px;border-radius:99px;font-size:12.5px;margin-bottom:26px}
 .dot{width:7px;height:7px;border-radius:50%;background:var(--ok);animation:bl 1.6s infinite}
 @keyframes bl{50%{opacity:.25}}
-h1{font-size:clamp(2.2rem,5.6vw,4.1rem);line-height:1.12;font-weight:700;letter-spacing:-1px}
+h1{font-size:clamp(2.2rem,5.6vw,4.1rem);line-height:1.1;font-weight:700;letter-spacing:-1px}
 h1 span{background:linear-gradient(120deg,var(--power),var(--thermal) 45%,var(--climate));-webkit-background-clip:text;background-clip:text;color:transparent}
-.sub{color:var(--dim);max-width:660px;margin:20px auto 34px;font-size:17.5px;line-height:1.8}
+.sub{color:var(--dim);max-width:640px;margin:20px auto 34px;font-size:17px;line-height:1.75}
 .cta{display:flex;gap:13px;justify-content:center;flex-wrap:wrap}
-.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px;margin-top:62px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-top:62px}
 .kpi{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px 18px}
-.kpi b{display:block;font:700 2.1rem 'JetBrains Mono';color:var(--power)}
-.kpi small{color:var(--dim);font-size:13px}
+.kpi b{display:block;font:700 2rem 'JetBrains Mono';color:var(--power)}
+.kpi small{color:var(--dim);font-size:12.5px}
 
+/* ---------- SECTIONS ---------- */
 section{padding:64px 0}
 .shead{margin-bottom:28px}
-.shead h2{font-size:clamp(1.55rem,3vw,2.25rem);font-weight:700}
-.shead p{color:var(--dim);margin-top:9px;font-size:15.5px;line-height:1.7}
-.tag{font:700 12px 'JetBrains Mono';letter-spacing:2px;color:var(--climate);margin-bottom:8px;display:block}
+.shead h2{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:700}
+.shead p{color:var(--dim);margin-top:9px;font-size:15px}
+.tag{font:700 11.5px 'JetBrains Mono';letter-spacing:2px;color:var(--climate);margin-bottom:8px;display:block}
 
-.bpgrid{display:grid;grid-template-columns:1fr 360px;gap:20px}
-.stage{background:linear-gradient(180deg,#0a1120,#060a13);border:1px solid var(--line);border-radius:20px;padding:14px;overflow:hidden}
-.layers{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-.ly{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:rgba(255,255,255,.03);
-  border-radius:99px;padding:9px 16px;font-size:13.5px;cursor:pointer;color:var(--dim);transition:.2s;user-select:none}
-.ly i{width:10px;height:10px;border-radius:50%;display:block}
+/* ---------- BLUEPRINT ---------- */
+.bpgrid{display:grid;grid-template-columns:1fr 336px;gap:20px}
+.stage{background:linear-gradient(180deg,#0a1120,#060a13);border:1px solid var(--line);border-radius:20px;padding:14px;position:relative;overflow:hidden}
+.layers{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.ly{display:flex;align-items:center;gap:7px;border:1px solid var(--line);background:rgba(255,255,255,.03);
+  border-radius:99px;padding:7px 14px;font-size:12.5px;cursor:pointer;color:var(--dim);transition:.2s;user-select:none}
+.ly i{width:9px;height:9px;border-radius:50%;display:block}
 .ly.on{color:var(--txt);background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.22)}
-.ly.off{opacity:.38}
+.ly.off{opacity:.42}
 svg#bp{width:100%;height:auto;display:block}
 .hs{cursor:pointer}
 .hs circle.core{transition:.25s}
-.hs:hover circle.core{r:13}
-.hs.active circle.core{r:14;fill:#fff}
-.pulse{animation:pl 2.4s ease-out infinite}
-@keyframes pl{0%{r:10;opacity:.5}100%{r:30;opacity:0}}
-.flow{stroke-dasharray:10 12;animation:dash 1.1s linear infinite}
-@keyframes dash{to{stroke-dashoffset:-44}}
-.blades{transform-origin:772px 132px;animation:spin 2.6s linear infinite}
+.hs:hover circle.core{r:11}
+.hs.active circle.core{r:12;fill:#fff}
+.pulse{animation:pl 2.4s ease-out infinite;transform-origin:center}
+@keyframes pl{0%{r:8;opacity:.55}100%{r:26;opacity:0}}
+.flow{stroke-dasharray:9 11;animation:dash 1.1s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-40}}
+.blades{transform-origin:690px 112px;animation:spin 2.6s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .sun{animation:gl 4s ease-in-out infinite}
-@keyframes gl{50%{opacity:.5}}
-.nodelbl{font-family:'IBM Plex Sans Thai';font-size:15px;font-weight:600;fill:#dce9ff;paint-order:stroke;
-  stroke:#070b14;stroke-width:4px;stroke-linejoin:round}
-.roomlbl{font-family:'JetBrains Mono';font-size:14px;fill:#7b96c2;letter-spacing:.8px}
-.flowlbl{font-family:'JetBrains Mono';font-size:13px;font-weight:700;paint-order:stroke;stroke:#070b14;stroke-width:5px;stroke-linejoin:round}
-.stagelbl{font-family:'JetBrains Mono';font-size:12px;fill:#5e779e;letter-spacing:2px}
+@keyframes gl{50%{opacity:.55}}
 
-/* FLOW CHAIN PANEL */
-.chains{display:grid;gap:14px;margin-top:22px}
-.chain{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px;transition:.25s;cursor:pointer}
-.chain:hover{border-color:rgba(255,255,255,.25);transform:translateY(-2px)}
-.chain.dimmed{opacity:.34}
-.chain .ch{display:flex;align-items:center;gap:11px;margin-bottom:16px}
-.chain .ch b{font-size:16.5px}
-.chain .ch .bdg{font:700 11px 'JetBrains Mono';letter-spacing:1.4px;padding:4px 10px;border-radius:99px}
-.steps{display:flex;align-items:stretch;gap:0;flex-wrap:wrap}
-.step{flex:1;min-width:172px;background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:14px;padding:14px}
-.step .r{font:700 10px 'JetBrains Mono';letter-spacing:1.5px;margin-bottom:6px}
-.step .n{font-size:14.5px;font-weight:600;line-height:1.4}
-.step .d{font-size:12.5px;color:var(--dim);margin-top:5px;line-height:1.55}
-.arw{display:grid;place-items:center;padding:0 9px;color:var(--dim);font-size:19px;flex:0 0 auto}
-.arw small{display:block;font:700 9.5px 'JetBrains Mono';margin-top:3px;white-space:nowrap}
-.outcome{margin-top:15px;display:flex;gap:11px;align-items:flex-start;background:rgba(52,211,153,.08);
-  border:1px solid rgba(52,211,153,.25);border-radius:13px;padding:14px;font-size:14px;color:#a8f2d4;line-height:1.65}
-.outcome b{color:#d6fff0}
-
-.insp{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:24px;position:sticky;top:86px;max-height:calc(100vh - 110px);overflow:auto}
-.insp .ic{width:48px;height:48px;border-radius:13px;display:grid;place-items:center;font-size:23px;margin-bottom:14px}
-.insp h3{font-size:20px;margin-bottom:5px}
-.insp .cat{font:700 11px 'JetBrains Mono';letter-spacing:1.6px;margin-bottom:14px}
-.insp p.desc{color:var(--dim);font-size:14.5px;line-height:1.8;margin-bottom:18px}
-.spec{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px dashed rgba(255,255,255,.09);font-size:13.5px}
+/* ---------- INSPECTOR ---------- */
+.insp{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:22px;position:sticky;top:84px;max-height:calc(100vh - 108px);overflow:auto}
+.insp .ic{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;font-size:22px;margin-bottom:14px}
+.insp h3{font-size:19px;margin-bottom:5px}
+.insp .cat{font:700 10.5px 'JetBrains Mono';letter-spacing:1.6px;margin-bottom:14px}
+.insp p.desc{color:var(--dim);font-size:14px;line-height:1.75;margin-bottom:18px}
+.spec{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-top:1px dashed rgba(255,255,255,.09);font-size:13px}
 .spec span:first-child{color:var(--dim)}
 .spec span:last-child{font-family:'JetBrains Mono';font-weight:700}
-.io{margin-top:16px;border:1px solid var(--line);border-radius:13px;padding:14px;font-size:13px;line-height:1.8}
-.io div{display:flex;gap:9px}
-.io b{font:700 10px 'JetBrains Mono';letter-spacing:1.2px;min-width:52px;padding-top:3px}
-.bene{margin-top:14px;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.25);
-  border-radius:12px;padding:14px;font-size:13.5px;color:#9ff0cf;line-height:1.65}
-.empty{color:var(--dim);font-size:14.5px;text-align:center;padding:46px 10px;line-height:1.9}
+.bene{margin-top:16px;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.25);border-radius:12px;padding:13px;font-size:13px;color:#9ff0cf;line-height:1.6}
+.empty{color:var(--dim);font-size:14px;text-align:center;padding:46px 10px;line-height:1.8}
 
+/* ---------- SIM ---------- */
 .simgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px}
 .scen{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:20px}
 .sb{border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);
-  border-radius:12px;padding:11px 18px;cursor:pointer;font:600 14px 'IBM Plex Sans Thai';transition:.2s}
+  border-radius:12px;padding:11px 17px;cursor:pointer;font:600 13.5px 'IBM Plex Sans Thai';transition:.2s}
 .sb.on{background:rgba(34,211,238,.14);border-color:rgba(34,211,238,.45);color:var(--climate)}
-.meter{font:700 2.25rem 'JetBrains Mono';line-height:1}
+.meter{font:700 2.2rem 'JetBrains Mono';line-height:1}
 .meter small{font-size:.95rem;color:var(--dim);font-weight:400}
 .bar{height:7px;border-radius:99px;background:rgba(255,255,255,.08);margin-top:14px;overflow:hidden}
 .bar i{display:block;height:100%;border-radius:99px;transition:width .7s cubic-bezier(.4,0,.2,1)}
-.clabel{color:var(--dim);font-size:13px;margin-bottom:9px;display:flex;justify-content:space-between}
+.clabel{color:var(--dim);font-size:12.5px;margin-bottom:9px;display:flex;justify-content:space-between}
 
+/* ---------- LOGIC BUILDER ---------- */
 .rule{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:rgba(255,255,255,.03);
   border:1px solid var(--line);border-radius:14px;padding:13px 15px;margin-bottom:11px}
-.rule b{font:700 11px 'JetBrains Mono';letter-spacing:1.4px;color:var(--power)}
+.rule b{font:700 10.5px 'JetBrains Mono';letter-spacing:1.4px;color:var(--power)}
 .rule b.then{color:var(--climate)}
-select,input[type=number],input[type=text]{background:#0d1526;border:1px solid var(--line);color:var(--txt);
-  border-radius:10px;padding:10px 13px;font:400 14px 'IBM Plex Sans Thai';outline:none}
+select,input[type=number],input[type=range]{
+  background:#0d1526;border:1px solid var(--line);color:var(--txt);border-radius:10px;
+  padding:9px 12px;font:400 13.5px 'IBM Plex Sans Thai';outline:none}
 select:focus,input:focus{border-color:rgba(34,211,238,.5)}
 .rm{margin-left:auto;background:none;border:0;color:#ff6b6b;cursor:pointer;font-size:17px;padding:4px 8px}
 .console{background:#060a12;border:1px solid var(--line);border-radius:14px;padding:16px;
-  font:400 13px 'JetBrains Mono';color:#7de3b8;min-height:130px;line-height:2;white-space:pre-wrap}
+  font:400 12.5px 'JetBrains Mono';color:#7de3b8;min-height:120px;line-height:2;white-space:pre-wrap}
 
+/* ---------- ROI ---------- */
 .roigrid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 .fld{margin-bottom:18px}
-.fld label{display:flex;justify-content:space-between;font-size:14px;color:var(--dim);margin-bottom:9px}
+.fld label{display:flex;justify-content:space-between;font-size:13.5px;color:var(--dim);margin-bottom:9px}
 .fld label b{color:var(--power);font-family:'JetBrains Mono'}
-input[type=range]{width:100%;padding:0;height:5px;-webkit-appearance:none;background:rgba(255,255,255,.1);border-radius:99px;outline:none}
+input[type=range]{width:100%;padding:0;height:5px;-webkit-appearance:none;background:rgba(255,255,255,.1)}
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:19px;height:19px;border-radius:50%;
   background:var(--power);cursor:pointer;box-shadow:0 0 0 5px rgba(255,176,32,.18)}
 .res{display:grid;grid-template-columns:1fr 1fr;gap:13px}
 .rbox{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:14px;padding:17px}
-.rbox b{display:block;font:700 1.6rem 'JetBrains Mono';color:var(--ok)}
-.rbox small{color:var(--dim);font-size:12.5px}
+.rbox b{display:block;font:700 1.55rem 'JetBrains Mono';color:var(--ok)}
+.rbox small{color:var(--dim);font-size:12px}
 
-.phone{width:295px;margin:0 auto;background:#0a1020;border:9px solid #1a2438;border-radius:38px;padding:16px 14px;box-shadow:0 30px 70px rgba(0,0,0,.6)}
+/* ---------- PHONE ---------- */
+.phone{width:290px;margin:0 auto;background:#0a1020;border:9px solid #1a2438;border-radius:38px;
+  padding:16px 14px;box-shadow:0 30px 70px rgba(0,0,0,.6)}
 .pnotch{width:100px;height:5px;border-radius:99px;background:#1a2438;margin:0 auto 16px}
 .ptile{background:rgba(255,255,255,.04);border-radius:13px;padding:12px;margin-bottom:9px}
-.ptile .t{font-size:11.5px;color:var(--dim)}
-.ptile .v{font:700 1.2rem 'JetBrains Mono'}
+.ptile .t{font-size:11px;color:var(--dim)}
+.ptile .v{font:700 1.15rem 'JetBrains Mono'}
 
-table{width:100%;border-collapse:collapse;font-size:14.5px}
+/* ---------- TABLE ---------- */
+table{width:100%;border-collapse:collapse;font-size:14px}
 th,td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--line)}
-th{font:700 12px 'JetBrains Mono';letter-spacing:1.3px;color:var(--dim)}
+th{font:700 11.5px 'JetBrains Mono';letter-spacing:1.3px;color:var(--dim)}
 td.good{color:var(--ok);font-weight:600}
 td.bad{color:#ff8a8a}
-footer{border-top:1px solid var(--line);padding:52px 0;text-align:center;color:var(--dim);font-size:14px}
 
-/* ---------- PDF MODAL ---------- */
-.ov{position:fixed;inset:0;z-index:200;background:rgba(3,6,12,.9);backdrop-filter:blur(10px);
-  display:none;align-items:center;justify-content:center;padding:22px}
-.ov.show{display:flex;animation:fi .25s}
-@keyframes fi{from{opacity:0}}
-.modal{width:100%;max-width:1080px;height:min(88vh,880px);background:#0b1222;border:1px solid var(--line);
-  border-radius:20px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.7)}
-.mhead{display:flex;align-items:center;gap:14px;padding:16px 20px;border-bottom:1px solid var(--line);flex-wrap:wrap}
-.mhead h3{font-size:17px;flex:1;min-width:150px}
-.mbody{flex:1;position:relative;background:#070b14}
-.mbody iframe{width:100%;height:100%;border:0;display:block}
-.drop{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:32px}
-.drop .box{border:2px dashed rgba(168,85,247,.4);border-radius:20px;padding:44px 34px;max-width:560px;
-  background:rgba(168,85,247,.05);transition:.25s}
-.drop .box.hot{border-color:var(--data);background:rgba(168,85,247,.14)}
-.drop .ic{font-size:46px;margin-bottom:14px}
-.drop h4{font-size:19px;margin-bottom:8px}
-.drop p{color:var(--dim);font-size:14px;line-height:1.8;margin-bottom:20px}
-.urlrow{display:flex;gap:9px;margin-top:18px;flex-wrap:wrap;justify-content:center}
-.urlrow input{flex:1;min-width:220px;font-size:13px;font-family:'JetBrains Mono'}
-.hint{font-size:12px;color:var(--dim);margin-top:14px;line-height:1.7}
-.fab{position:fixed;right:22px;bottom:22px;z-index:70;display:flex;flex-direction:column;gap:10px}
-.fab button{border-radius:16px;padding:14px 20px;box-shadow:0 14px 40px rgba(0,0,0,.5)}
+footer{border-top:1px solid var(--line);padding:52px 0;text-align:center;color:var(--dim);font-size:13.5px}
 
-#tour{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(150%);z-index:80;
+/* ---------- TOUR ---------- */
+#tour{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(140%);z-index:80;
   background:rgba(12,19,34,.96);backdrop-filter:blur(16px);border:1px solid rgba(255,176,32,.35);
-  border-radius:18px;padding:18px 22px;max-width:660px;width:calc(100% - 44px);
-  display:flex;gap:16px;align-items:center;transition:.45s cubic-bezier(.3,1.2,.5,1);box-shadow:0 20px 60px rgba(0,0,0,.6)}
+  border-radius:18px;padding:18px 22px;max-width:620px;width:calc(100% - 44px);
+  display:flex;gap:16px;align-items:center;transition:.45s cubic-bezier(.3,1.2,.5,1);
+  box-shadow:0 20px 60px rgba(0,0,0,.6)}
 #tour.show{transform:translateX(-50%) translateY(0)}
-#tour .n{font:700 12.5px 'JetBrains Mono';color:var(--power);white-space:nowrap}
-#tour p{font-size:14px;color:var(--dim);line-height:1.7;flex:1}
+#tour .n{font:700 12px 'JetBrains Mono';color:var(--power);white-space:nowrap}
+#tour p{font-size:13.5px;color:var(--dim);line-height:1.65;flex:1}
 .reveal{opacity:0;transform:translateY(28px);transition:.7s}
 .reveal.in{opacity:1;transform:none}
-@media(max-width:980px){.bpgrid,.roigrid{grid-template-columns:1fr}.insp{position:static;max-height:none}
-  nav a.nl{display:none}.arw{transform:rotate(90deg);padding:8px 0;width:100%}.step{min-width:100%}}
+@media(max-width:980px){.bpgrid,.roigrid{grid-template-columns:1fr}.insp{position:static;max-height:none}}
 </style>
 </head>
 <body>
@@ -209,12 +175,11 @@ footer{border-top:1px solid var(--line);padding:52px 0;text-align:center;color:v
 <nav><div class="wrap">
   <div class="logo"><i>◈</i> SOLARIS<span style="color:var(--dim);font-weight:400"> / Blueprint</span></div>
   <a class="nl" href="#bpsec" data-en="Blueprint">ผังระบบ</a>
-  <a class="nl" href="#flows" data-en="Flow Paths">เส้นทางการไหล</a>
   <a class="nl" href="#sim" data-en="Live Flow">จำลองพลังงาน</a>
+  <a class="nl" href="#logic" data-en="Automation">ออโตเมชัน</a>
   <a class="nl" href="#roi" data-en="Savings">คำนวณคุ้มทุน</a>
   <div class="navspacer">
     <div class="lang"><button id="lth" class="on">TH</button><button id="len">EN</button></div>
-    <button class="btn btn-v" onclick="openPdf()" data-en="📑 Presentation">📑 พรีเซนเทชัน</button>
     <button class="btn btn-p" onclick="startTour()" data-en="▶ Guided Tour">▶ เริ่มนำเสนอ</button>
   </div>
 </div></nav>
@@ -222,13 +187,12 @@ footer{border-top:1px solid var(--line);padding:52px 0;text-align:center;color:v
 <header class="wrap">
   <div class="pill"><span class="dot"></span><span data-en="Live system · Hybrid Solar + Wind">ระบบทำงานจริง · ไฮบริดโซลาร์ + พลังงานลม</span></div>
   <h1 data-en="The home that <span>powers, heats and thinks</span> for itself">บ้านที่ <span>ผลิตไฟ ต้มน้ำ และคิดเอง</span> ได้ทั้งหลัง</h1>
-  <p class="sub" data-en="Follow every line from its source to its destination — see exactly what generates, what carries it, where it ends, and what you get out of it.">
-    ตามทุกเส้นตั้งแต่ “จุดกำเนิด → ทางผ่าน → ปลายทาง → ผลลัพธ์” เห็นชัดว่าอะไรผลิต อะไรส่งต่อ ไปจบที่ไหน และคุณได้อะไรกลับมา
+  <p class="sub" data-en="Explore every installation point, pipe and data line of the Smart Solar Home — an interactive blueprint built for people who want to see exactly what they're buying.">
+    สำรวจทุกจุดติดตั้ง ทุกเส้นท่อ และทุกสายข้อมูลของระบบ Smart Solar Home — ผังอินเทอร์แอ็กทีฟที่ให้คุณ “เห็นของจริง” ก่อนตัดสินใจ
   </p>
   <div class="cta">
-    <button class="btn btn-p" onclick="go('#bpsec')" data-en="Explore the blueprint">สำรวจผังระบบ</button>
-    <button class="btn btn-v" onclick="openPdf()" data-en="📑 Open presentation">📑 เปิดพรีเซนเทชัน</button>
-    <button class="btn btn-g" onclick="go('#roi')" data-en="Calculate my savings">คำนวณเงินที่ประหยัดได้</button>
+    <button class="btn btn-p" onclick="document.getElementById('bpsec').scrollIntoView({behavior:'smooth'})" data-en="Explore the blueprint">สำรวจผังระบบ</button>
+    <button class="btn btn-g" onclick="document.getElementById('roi').scrollIntoView({behavior:'smooth'})" data-en="Calculate my savings">คำนวณเงินที่ประหยัดได้</button>
   </div>
   <div class="kpis">
     <div class="kpi"><b data-count="70">0</b><small data-en="% less water-heating electricity">% ค่าไฟทำน้ำร้อนที่ลดลง</small></div>
@@ -238,208 +202,185 @@ footer{border-top:1px solid var(--line);padding:52px 0;text-align:center;color:v
   </div>
 </header>
 
-<!-- ============ BLUEPRINT ============ -->
+<!-- ================= BLUEPRINT ================= -->
 <section id="bpsec" class="wrap reveal">
   <div class="shead">
     <span class="tag">01 / INTERACTIVE BLUEPRINT</span>
-    <h2 data-en="Every line is labelled: source → route → destination">ทุกเส้นมีป้ายกำกับ: ต้นทาง → ทางผ่าน → ปลายทาง</h2>
-    <p data-en="Toggle the four system layers, then click any numbered node to inspect its equipment, inputs and outputs.">สลับดูทั้ง 4 ระบบ แล้วคลิกจุดที่มีหมายเลขเพื่อดูอุปกรณ์ สิ่งที่รับเข้า และสิ่งที่ส่งออก</p>
+    <h2 data-en="Click any node to inspect the equipment">คลิกที่จุดใดก็ได้ เพื่อดูอุปกรณ์จริง</h2>
+    <p data-en="Toggle the system layers to see how power, heat, climate and data move through the house.">สลับชั้นระบบเพื่อดูว่า ไฟฟ้า ความร้อน อุณหภูมิ และข้อมูล เดินทางในบ้านอย่างไร</p>
   </div>
 
   <div class="bpgrid">
     <div class="stage">
       <div class="layers">
-        <div class="ly on" data-layer="power"><i style="background:var(--power)"></i><span data-en="① Power — Solar + Wind">① ไฟฟ้า — โซลาร์ + ลม</span></div>
-        <div class="ly on" data-layer="thermal"><i style="background:var(--thermal)"></i><span data-en="② Heat — Solar hot water">② ความร้อน — น้ำร้อนแสงอาทิตย์</span></div>
-        <div class="ly on" data-layer="climate"><i style="background:var(--climate)"></i><span data-en="③ Climate — Thermostat zones">③ อุณหภูมิ — Thermostat Zone</span></div>
-        <div class="ly on" data-layer="data"><i style="background:var(--data)"></i><span data-en="④ Data — Logger → Gateway → App">④ ข้อมูล — Logger → Gateway → App</span></div>
+        <div class="ly on" data-layer="power"><i style="background:var(--power)"></i><span data-en="Power (Solar + Wind)">ไฟฟ้า (โซลาร์ + ลม)</span></div>
+        <div class="ly on" data-layer="thermal"><i style="background:var(--thermal)"></i><span data-en="Solar hot water">น้ำร้อนพลังแสงอาทิตย์</span></div>
+        <div class="ly on" data-layer="climate"><i style="background:var(--climate)"></i><span data-en="Thermostat zones">โซนควบคุมอุณหภูมิ</span></div>
+        <div class="ly on" data-layer="data"><i style="background:var(--data)"></i><span data-en="Data & gateway">ข้อมูล & เกตเวย์</span></div>
       </div>
 
-      <svg id="bp" viewBox="0 0 1060 780" xmlns="http://www.w3.org/2000/svg">
+      <svg id="bp" viewBox="0 0 900 640" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#0f1d38"/><stop offset="100%" stop-color="#070b14"/></linearGradient>
+            <stop offset="0%" stop-color="#0f1d38"/><stop offset="100%" stop-color="#070b14"/>
+          </linearGradient>
           <linearGradient id="pan" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#1b3a6b"/><stop offset="100%" stop-color="#0d1d38"/></linearGradient>
+            <stop offset="0%" stop-color="#1b3a6b"/><stop offset="100%" stop-color="#0d1d38"/>
+          </linearGradient>
           <radialGradient id="sung"><stop offset="0%" stop-color="#ffd280" stop-opacity=".9"/><stop offset="100%" stop-color="#ffb020" stop-opacity="0"/></radialGradient>
-          <marker id="aP" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#ffb020"/></marker>
-          <marker id="aT" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#ff4d4d"/></marker>
-          <marker id="aC" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#22d3ee"/></marker>
-          <marker id="aD" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#a855f7"/></marker>
         </defs>
 
-        <rect width="1060" height="780" fill="url(#sky)"/>
-        <circle class="sun" cx="120" cy="86" r="74" fill="url(#sung)"/>
-        <circle cx="120" cy="86" r="24" fill="#ffcf6b" opacity=".85"/>
-        <text class="stagelbl" x="120" y="150" text-anchor="middle">SOLAR IRRADIANCE</text>
+        <rect width="900" height="640" fill="url(#sky)"/>
+        <circle class="sun" cx="130" cy="90" r="70" fill="url(#sung)"/>
+        <circle cx="130" cy="90" r="22" fill="#ffcf6b" opacity=".85"/>
 
-        <line x1="40" y1="612" x2="1020" y2="612" stroke="#2a3a58" stroke-width="2"/>
-        <rect x="40" y="612" width="980" height="168" fill="#0a1020" opacity=".7"/>
+        <!-- ground -->
+        <line x1="40" y1="520" x2="860" y2="520" stroke="#2a3a58" stroke-width="2"/>
+        <rect x="40" y="520" width="820" height="120" fill="#0a1020" opacity=".7"/>
 
-        <!-- house -->
-        <polygon points="150,272 500,104 850,272" fill="#101b30" stroke="#33507e" stroke-width="2"/>
-        <rect x="190" y="272" width="620" height="340" fill="#0c1526" stroke="#33507e" stroke-width="2"/>
-        <line x1="190" y1="442" x2="810" y2="442" stroke="#33507e" stroke-width="2"/>
-        <line x1="400" y1="272" x2="400" y2="442" stroke="#24395c"/>
-        <line x1="610" y1="272" x2="610" y2="442" stroke="#24395c"/>
-        <line x1="360" y1="442" x2="360" y2="612" stroke="#24395c"/>
-        <line x1="640" y1="442" x2="640" y2="612" stroke="#24395c"/>
+        <!-- house shell -->
+        <polygon points="118,228 450,78 782,228" fill="#111d33" stroke="#3b5party" />
+        <polygon points="118,228 450,78 782,228" fill="#101b30" stroke="#33507e" stroke-width="2"/>
+        <rect x="160" y="228" width="580" height="292" fill="#0c1526" stroke="#33507e" stroke-width="2"/>
+        <line x1="160" y1="378" x2="740" y2="378" stroke="#33507e" stroke-width="2"/>
+        <line x1="380" y1="228" x2="380" y2="378" stroke="#24395c"/>
+        <line x1="560" y1="228" x2="560" y2="378" stroke="#24395c"/>
+        <line x1="330" y1="378" x2="330" y2="520" stroke="#24395c"/>
+        <line x1="530" y1="378" x2="530" y2="520" stroke="#24395c"/>
 
-        <g class="roomlbl">
-          <text x="212" y="300">ZONE 01 · BEDROOM</text>
-          <text x="422" y="300">ZONE 02 · LOFT</text>
-          <text x="632" y="300">ZONE 03 · STUDY</text>
-          <text x="212" y="470">ZONE 04 · LIVING</text>
-          <text x="382" y="470">PLANT ROOM</text>
-          <text x="662" y="470">ZONE 05 · KITCHEN</text>
+        <!-- room labels -->
+        <g font-family="JetBrains Mono" font-size="10" fill="#5e779e" letter-spacing="1">
+          <text x="186" y="250">ZONE 01 · BEDROOM</text>
+          <text x="400" y="250">ZONE 02 · LOFT</text>
+          <text x="580" y="250">ZONE 03 · STUDY</text>
+          <text x="186" y="400">ZONE 04 · LIVING</text>
+          <text x="352" y="400">UTILITY / PLANT ROOM</text>
+          <text x="552" y="400">ZONE 05 · KITCHEN</text>
+          <text x="420" y="592">UNDERGROUND THERMAL STORE</text>
         </g>
 
-        <!-- PV array -->
+        <!-- solar panels -->
         <g>
-          <polygon points="228,258 356,196 380,210 252,272" fill="url(#pan)" stroke="#4a7fd6" stroke-width="1.8"/>
-          <polygon points="262,242 390,180 414,194 286,256" fill="url(#pan)" stroke="#4a7fd6" stroke-width="1.8"/>
-          <polygon points="296,226 424,164 448,178 320,240" fill="url(#pan)" stroke="#4a7fd6" stroke-width="1.8"/>
+          <polygon points="205,214 330,158 352,172 227,228" fill="url(#pan)" stroke="#4a7fd6" stroke-width="1.6"/>
+          <polygon points="238,200 363,144 385,158 260,214" fill="url(#pan)" stroke="#4a7fd6" stroke-width="1.6"/>
+          <polygon points="271,186 396,130 418,144 293,200" fill="url(#pan)" stroke="#4a7fd6" stroke-width="1.6"/>
         </g>
-        <!-- thermal collector -->
-        <polygon points="546,160 676,222 652,236 522,174" fill="#3a1420" stroke="#ff4d4d" stroke-width="2"/>
-        <!-- turbine -->
-        <line x1="772" y1="132" x2="772" y2="238" stroke="#5c7aa8" stroke-width="5"/>
-        <g class="blades" stroke="#9ec3f5" stroke-width="4.5" stroke-linecap="round">
-          <line x1="772" y1="132" x2="772" y2="72"/><line x1="772" y1="132" x2="824" y2="162"/><line x1="772" y1="132" x2="720" y2="162"/>
-        </g>
-        <circle cx="772" cy="132" r="7" fill="#ffb020"/>
-        <!-- cloud -->
-        <rect x="930" y="96" width="84" height="70" rx="14" fill="#1a1030" stroke="#a855f7" stroke-width="1.8"/>
-        <text x="972" y="140" text-anchor="middle" font-size="26">☁</text>
-        <text class="stagelbl" x="972" y="184" text-anchor="middle" fill="#a855f7">CLOUD / APP</text>
-        <!-- underground store -->
-        <rect x="440" y="662" width="160" height="72" rx="14" fill="#141f36" stroke="#ff4d4d" stroke-width="1.8" opacity=".9"/>
-        <text class="roomlbl" x="520" y="756" text-anchor="middle">UNDERGROUND THERMAL STORE</text>
+        <!-- solar thermal collector -->
+        <polygon points="480,132 600,186 578,200 458,146" fill="#3a1420" stroke="var(--thermal)" stroke-width="1.8"/>
 
-        <!-- ===== LAYER: POWER ===== -->
-        <g id="L-power" fill="none" stroke="#ffb020" stroke-width="3" opacity=".95">
-          <path class="flow" d="M330 220 L330 300 L286 340 L286 486" marker-end="url(#aP)"/>
-          <path class="flow" d="M772 244 L772 320 L700 360 L330 360 L300 380 L300 470" marker-end="url(#aP)"/>
-          <path class="flow" d="M300 512 L300 560 L470 560 L470 596" marker-end="url(#aP)"/>
-          <path class="flow" d="M318 500 L560 500 L700 500" marker-end="url(#aP)" stroke-dasharray="8 10"/>
-          <g class="flowlbl" fill="#ffd98a" stroke="#070b14">
-            <text x="342" y="332">DC 13.2 kWp</text>
-            <text x="520" y="352">AC 1.5 kW · Wind</text>
-            <text x="352" y="552">Charge 15 kWh</text>
-            <text x="560" y="492">AC 230 V → โหลดทั้งบ้าน</text>
-          </g>
+        <!-- wind turbine -->
+        <line x1="690" y1="112" x2="690" y2="200" stroke="#5c7aa8" stroke-width="4"/>
+        <g class="blades" stroke="#9ec3f5" stroke-width="4" stroke-linecap="round">
+          <line x1="690" y1="112" x2="690" y2="60"/>
+          <line x1="690" y1="112" x2="735" y2="138"/>
+          <line x1="690" y1="112" x2="645" y2="138"/>
         </g>
+        <circle cx="690" cy="112" r="6" fill="var(--power)"/>
 
-        <!-- ===== LAYER: THERMAL ===== -->
-        <g id="L-thermal" fill="none" stroke="#ff4d4d" stroke-width="3.2">
-          <path d="M596 200 L596 300 L520 348 L520 476" marker-end="url(#aT)"/>
-          <path d="M520 508 L520 580 L520 656" marker-end="url(#aT)"/>
-          <path class="flow" d="M538 492 L700 492 L760 470" marker-end="url(#aT)" stroke-width="2.6"/>
-          <g class="flowlbl" fill="#ffb3b3" stroke="#070b14">
-            <text x="604" y="336">Glycol loop 85°C</text>
-            <text x="536" y="606">Surplus heat → เก็บ 72 ชม.</text>
-            <text x="648" y="464">น้ำร้อน 62°C → ห้องน้ำ/ครัว</text>
-          </g>
+        <!-- ======= FLOW LAYERS ======= -->
+        <g id="L-power" stroke="var(--power)" stroke-width="2.4" fill="none" opacity=".95">
+          <path class="flow" d="M300 195 L300 230 L268 260 L268 430"/>
+          <path class="flow" d="M690 200 L690 250 L640 290 L300 290 L300 420"/>
+          <path class="flow" d="M268 440 L268 470 L440 470 L440 500"/>
+        </g>
+        <g id="L-thermal" stroke="var(--thermal)" stroke-width="2.6" fill="none">
+          <path d="M520 168 L520 230 L470 268 L470 424"/>
+          <path d="M470 456 L470 490 L470 540"/>
+          <path class="flow" d="M470 456 L560 456 L620 440" stroke-width="2"/>
+        </g>
+        <g id="L-climate" stroke="var(--climate)" stroke-width="2" fill="none" stroke-dasharray="6 6">
+          <path d="M400 434 L400 300 L230 300"/>
+          <path d="M400 434 L400 300 L470 300 L470 268"/>
+          <path d="M400 434 L400 300 L620 300"/>
+          <path d="M400 434 L250 434"/>
+          <path d="M400 434 L620 434"/>
+        </g>
+        <g id="L-data" stroke="var(--data)" stroke-width="1.8" fill="none" stroke-dasharray="3 6">
+          <path d="M352 434 L400 434"/>
+          <path class="flow" d="M352 420 L352 330 L800 330 L800 150" stroke-dasharray="7 9"/>
         </g>
 
-        <!-- ===== LAYER: CLIMATE ===== -->
-        <g id="L-climate" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-dasharray="7 7">
-          <path d="M430 498 L430 386 L262 386" marker-end="url(#aC)"/>
-          <path d="M430 498 L430 386 L492 386 L492 348" marker-end="url(#aC)"/>
-          <path d="M430 498 L430 386 L690 386" marker-end="url(#aC)"/>
-          <path d="M412 506 L262 506" marker-end="url(#aC)"/>
-          <path d="M448 506 L690 506" marker-end="url(#aC)"/>
-          <g class="flowlbl" fill="#8feaf8" stroke="#070b14">
-            <text x="268" y="376">Zone 01/04 setpoint</text>
-            <text x="560" y="376">Zone 02/03/05 setpoint</text>
-          </g>
+        <!-- underground tank -->
+        <rect x="410" y="540" width="120" height="56" rx="12" fill="#141f36" stroke="var(--thermal)" stroke-width="1.6" opacity=".9"/>
+
+        <!-- cloud/app -->
+        <g>
+          <rect x="770" y="96" width="60" height="56" rx="12" fill="#1a1030" stroke="var(--data)" stroke-width="1.6"/>
+          <text x="800" y="130" text-anchor="middle" font-size="20">☁</text>
         </g>
 
-        <!-- ===== LAYER: DATA ===== -->
-        <g id="L-data" fill="none" stroke="#a855f7" stroke-width="2.2" stroke-dasharray="4 7">
-          <path d="M330 240 L200 240 L170 420 L358 490" marker-end="url(#aD)"/>
-          <path d="M760 250 L820 420 L400 490" marker-end="url(#aD)"/>
-          <path d="M520 490 L400 492" marker-end="url(#aD)"/>
-          <path d="M390 498 L424 498" marker-end="url(#aD)" stroke-width="3" stroke-dasharray="0"/>
-          <path class="flow" d="M446 492 L880 430 L930 180" marker-end="url(#aD)" stroke-dasharray="8 9"/>
-          <path class="flow" d="M940 200 L900 450 L470 530" marker-end="url(#aD)" stroke-dasharray="8 9" opacity=".7"/>
-          <g class="flowlbl" fill="#d8b4fe" stroke="#070b14">
-            <text x="150" y="450">Modbus/RS485 · 1 s</text>
-            <text x="700" y="422">Sensor bus</text>
-            <text x="700" y="556">Cloud sync ↔ App command</text>
-          </g>
-        </g>
-
-        <!-- ===== HOTSPOTS + NODE LABELS ===== -->
+        <!-- ======= HOTSPOTS ======= -->
         <g id="hotspots">
-          <g class="hs" data-id="solar"><circle class="pulse" cx="330" cy="204" r="10" fill="#ffb020"/><circle class="core" cx="330" cy="204" r="10" fill="#ffb020" stroke="#070b14" stroke-width="3.5"/><text class="nodelbl" x="350" y="198">① แผงโซลาร์ 13.2 kWp</text></g>
-          <g class="hs" data-id="wind"><circle class="pulse" cx="772" cy="132" r="10" fill="#ffb020"/><circle class="core" cx="772" cy="132" r="10" fill="#ffb020" stroke="#070b14" stroke-width="3.5"/><text class="nodelbl" x="792" y="126">② กังหันลม 1.5 kW</text></g>
-          <g class="hs" data-id="collector"><circle class="pulse" cx="596" cy="196" r="10" fill="#ff4d4d"/><circle class="core" cx="596" cy="196" r="10" fill="#ff4d4d" stroke="#070b14" stroke-width="3.5"/><text class="nodelbl" x="616" y="190">③ แผงรับความร้อน 4 m²</text></g>
-          <g class="hs" data-id="inverter"><circle class="pulse" cx="286" cy="498" r="10" fill="#ffb020"/><circle class="core" cx="286" cy="498" r="10" fill="#ffb020" stroke="#070b14" stroke-width="3.5"/><text class="nodelbl" x="206" y="538">④ ไฮบริดอินเวอร์เตอร์</text></g>
-          <g class="hs" data-id="logger"><circle class="pulse" cx="370" cy="498" r="10" fill="#a855f7"/><circle class="core" cx="370" cy="498" r="10" fill="#a855f7" stroke="#070b14" stroke-width="3.5"/><text class="nodelbl" x="330" y="566">⑤ Data-logging Unit</text></g>
-          <g class="hs" data-id="gateway"><circle class="pulse" cx="430" cy="498" r="10" fill="#a855f7"/><circle class="core" cx="430" cy="498" r="10" fill="#a855f7" stroke="#070b14" stroke-width="3.5"/><text class="nodelbl" x="404" y="594">⑥ Smart Gateway</text></g>
-          <g class="hs" data-id="tank"><circle class="pulse" cx="520" cy="492" r="10" fill="#ff4d4d"/><circle class="core" cx="520" cy="492" r="10" fill="#ff4d4d" stroke="#070b14" stroke-width="3.5"/><text class="nodelbl" x="540" y="486">⑦ ถังน้ำร้อน 300 L</text></g>
-          <g class="hs" data-id="store"><circle class="pulse" cx="520" cy="698" r="10" fill="#ff4d4d"/><circle class="core" cx="520" cy="698" r="10" fill="#ff4d4d" stroke="#070b14" stroke-width="3.5"/><text class="nodelbl" x="542" y="692">⑧ ถังกักเก็บใต้ดิน 1,000 L</text></g>
-          <g class="hs" data-id="thermo"><circle class="pulse" cx="690" cy="386" r="10" fill="#22d3ee"/><circle class="core" cx="690" cy="386" r="10" fill="#22d3ee" stroke="#070b14" stroke-width="3.5"/><text class="nodelbl" x="710" y="380">⑨ Thermostat Zone</text></g>
-          <g class="hs" data-id="battery"><circle class="pulse" cx="470" cy="600" r="10" fill="#34d399"/><circle class="core" cx="470" cy="600" r="10" fill="#34d399" stroke="#070b14" stroke-width="3.5"/><text class="nodelbl" x="180" y="644">⑩ แบตเตอรี่ LFP 15 kWh</text></g>
-          <g class="hs" data-id="app"><circle class="pulse" cx="972" cy="130" r="10" fill="#a855f7"/><circle class="core" cx="972" cy="130" r="10" fill="#a855f7" stroke="#070b14" stroke-width="3.5"/><text class="nodelbl" x="846" y="80">⑪ Solar Home App</text></g>
+          <g class="hs" data-id="solar"><circle class="pulse" cx="300" cy="172" r="8" fill="var(--power)"/><circle class="core" cx="300" cy="172" r="8" fill="var(--power)" stroke="#070b14" stroke-width="3"/></g>
+          <g class="hs" data-id="wind"><circle class="pulse" cx="690" cy="112" r="8" fill="var(--power)"/><circle class="core" cx="690" cy="112" r="8" fill="var(--power)" stroke="#070b14" stroke-width="3"/></g>
+          <g class="hs" data-id="collector"><circle class="pulse" cx="520" cy="166" r="8" fill="var(--thermal)"/><circle class="core" cx="520" cy="166" r="8" fill="var(--thermal)" stroke="#070b14" stroke-width="3"/></g>
+          <g class="hs" data-id="inverter"><circle class="pulse" cx="268" cy="434" r="8" fill="var(--power)"/><circle class="core" cx="268" cy="434" r="8" fill="var(--power)" stroke="#070b14" stroke-width="3"/></g>
+          <g class="hs" data-id="logger"><circle class="pulse" cx="352" cy="434" r="8" fill="var(--data)"/><circle class="core" cx="352" cy="434" r="8" fill="var(--data)" stroke="#070b14" stroke-width="3"/></g>
+          <g class="hs" data-id="gateway"><circle class="pulse" cx="400" cy="434" r="8" fill="var(--data)"/><circle class="core" cx="400" cy="434" r="8" fill="var(--data)" stroke="#070b14" stroke-width="3"/></g>
+          <g class="hs" data-id="tank"><circle class="pulse" cx="470" cy="440" r="8" fill="var(--thermal)"/><circle class="core" cx="470" cy="440" r="8" fill="var(--thermal)" stroke="#070b14" stroke-width="3"/></g>
+          <g class="hs" data-id="store"><circle class="pulse" cx="470" cy="568" r="8" fill="var(--thermal)"/><circle class="core" cx="470" cy="568" r="8" fill="var(--thermal)" stroke="#070b14" stroke-width="3"/></g>
+          <g class="hs" data-id="thermo"><circle class="pulse" cx="620" cy="300" r="8" fill="var(--climate)"/><circle class="core" cx="620" cy="300" r="8" fill="var(--climate)" stroke="#070b14" stroke-width="3"/></g>
+          <g class="hs" data-id="battery"><circle class="pulse" cx="440" cy="500" r="8" fill="var(--ok)"/><circle class="core" cx="440" cy="500" r="8" fill="var(--ok)" stroke="#070b14" stroke-width="3"/></g>
+          <g class="hs" data-id="app"><circle class="pulse" cx="800" cy="124" r="8" fill="var(--data)"/><circle class="core" cx="800" cy="124" r="8" fill="var(--data)" stroke="#070b14" stroke-width="3"/></g>
         </g>
       </svg>
     </div>
 
     <aside class="insp" id="insp">
-      <div class="empty" id="emptyState" data-en="◈<br>Select a numbered node<br>to view its specifications,<br>what it receives, what it sends,<br>and the benefit it delivers.">◈<br>เลือกจุดที่มีหมายเลขบนผัง<br>เพื่อดูสเปก · รับเข้าจากอะไร<br>ส่งต่อไปไหน · และได้ผลลัพธ์อะไร</div>
+      <div class="empty" id="emptyState" data-en="◈<br>Select a node on the blueprint<br>to view specifications, role in the system and the benefit to the homeowner.">◈<br>เลือกจุดใดก็ได้บนผัง<br>เพื่อดูสเปก หน้าที่ในระบบ<br>และประโยชน์ที่เจ้าของบ้านได้รับ</div>
       <div id="inspBody" style="display:none"></div>
     </aside>
   </div>
 </section>
 
-<!-- ============ FLOW CHAINS ============ -->
-<section id="flows" class="wrap reveal">
-  <div class="shead">
-    <span class="tag">02 / FLOW PATHS — SOURCE TO OUTCOME</span>
-    <h2 data-en="Where each line starts, travels and ends">แต่ละเส้น เริ่มที่ไหน ผ่านอะไร จบที่ไหน</h2>
-    <p data-en="Hover a chain to isolate it on the blueprint above. Every path ends with a measurable result.">วางเมาส์ที่แถวใดก็ได้เพื่อไฮไลต์เส้นนั้นบนผังด้านบน ทุกเส้นทางจบด้วยผลลัพธ์ที่วัดได้จริง</p>
-  </div>
-  <div class="chains" id="chains"></div>
-</section>
-
-<!-- ============ SIMULATION ============ -->
+<!-- ================= SIMULATION ================= -->
 <section id="sim" class="wrap reveal">
   <div class="shead">
-    <span class="tag">03 / LIVE ENERGY FLOW</span>
+    <span class="tag">02 / LIVE ENERGY FLOW</span>
     <h2 data-en="See the house perform in any weather">ดูบ้านทำงานจริงในทุกสภาพอากาศ</h2>
-    <p data-en="Hybrid generation keeps supply stable at night and on cloudy days.">ระบบไฮบริดจ่ายไฟต่อเนื่องแม้กลางคืนหรือฟ้าปิด</p>
+    <p data-en="Hybrid generation keeps supply stable at night and on cloudy days — here's the proof.">ระบบไฮบริดจ่ายไฟได้ต่อเนื่องแม้กลางคืนหรือฟ้าปิด — ลองเลือกสถานการณ์ดู</p>
   </div>
   <div class="scen" id="scen">
     <button class="sb on" data-s="sunny" data-en="☀ Clear day">☀ แดดจัด</button>
     <button class="sb" data-s="cloudy" data-en="☁ Cloudy">☁ ฟ้าปิด</button>
-    <button class="sb" data-s="windy" data-en="🌬 Windy">🌬 ลมแรง</button>
+    <button class="sb" data-s="windy" data-en="🌬 Windy storm">🌬 ลมแรง</button>
     <button class="sb" data-s="night" data-en="🌙 Night">🌙 กลางคืน</button>
   </div>
   <div class="simgrid">
-    <div class="card"><div class="clabel"><span data-en="Solar generation">กำลังผลิตจากโซลาร์</span><span class="mono" id="pcS">—</span></div>
-      <div class="meter" style="color:var(--power)"><span id="vS">0</span><small> kW</small></div><div class="bar"><i id="bS" style="background:var(--power);width:0"></i></div></div>
-    <div class="card"><div class="clabel"><span data-en="Wind generation">กำลังผลิตจากกังหันลม</span><span class="mono" id="pcW">—</span></div>
-      <div class="meter" style="color:#9ec3f5"><span id="vW">0</span><small> kW</small></div><div class="bar"><i id="bW" style="background:#9ec3f5;width:0"></i></div></div>
-    <div class="card"><div class="clabel"><span data-en="Battery reserve">พลังงานสำรองในแบตเตอรี่</span><span class="mono" id="pcB">—</span></div>
-      <div class="meter" style="color:var(--ok)"><span id="vB">0</span><small> %</small></div><div class="bar"><i id="bB" style="background:var(--ok);width:0"></i></div></div>
-    <div class="card"><div class="clabel"><span data-en="Hot water temp">อุณหภูมิน้ำร้อน</span><span class="mono" id="pcT">—</span></div>
-      <div class="meter" style="color:var(--thermal)"><span id="vT">0</span><small> °C</small></div><div class="bar"><i id="bT" style="background:var(--thermal);width:0"></i></div></div>
+    <div class="card">
+      <div class="clabel"><span data-en="Solar generation">กำลังผลิตจากโซลาร์</span><span class="mono" id="pcS">—</span></div>
+      <div class="meter" style="color:var(--power)"><span id="vS">0</span><small> kW</small></div>
+      <div class="bar"><i id="bS" style="background:var(--power);width:0"></i></div>
+    </div>
+    <div class="card">
+      <div class="clabel"><span data-en="Wind generation">กำลังผลิตจากกังหันลม</span><span class="mono" id="pcW">—</span></div>
+      <div class="meter" style="color:#9ec3f5"><span id="vW">0</span><small> kW</small></div>
+      <div class="bar"><i id="bW" style="background:#9ec3f5;width:0"></i></div>
+    </div>
+    <div class="card">
+      <div class="clabel"><span data-en="Battery reserve">พลังงานสำรองในแบตเตอรี่</span><span class="mono" id="pcB">—</span></div>
+      <div class="meter" style="color:var(--ok)"><span id="vB">0</span><small> %</small></div>
+      <div class="bar"><i id="bB" style="background:var(--ok);width:0"></i></div>
+    </div>
+    <div class="card">
+      <div class="clabel"><span data-en="Hot water temp">อุณหภูมิน้ำร้อน</span><span class="mono" id="pcT">—</span></div>
+      <div class="meter" style="color:var(--thermal)"><span id="vT">0</span><small> °C</small></div>
+      <div class="bar"><i id="bT" style="background:var(--thermal);width:0"></i></div>
+    </div>
   </div>
   <div class="card" style="margin-top:16px;display:flex;gap:14px;align-items:flex-start">
-    <div style="font-size:23px">🧠</div>
-    <div><b style="font-size:14.5px" data-en="Predictive decision">การตัดสินใจล่วงหน้าของระบบ</b>
-      <p id="aiMsg" style="color:var(--dim);font-size:14px;line-height:1.8;margin-top:6px"></p></div>
+    <div style="font-size:22px">🧠</div>
+    <div><b style="font-size:14px" data-en="Predictive decision">การตัดสินใจล่วงหน้าของระบบ</b>
+      <p id="aiMsg" style="color:var(--dim);font-size:13.5px;line-height:1.75;margin-top:6px"></p></div>
   </div>
 </section>
 
-<!-- ============ LOGIC ============ -->
+<!-- ================= LOGIC BUILDER ================= -->
 <section id="logic" class="wrap reveal">
   <div class="shead">
-    <span class="tag">04 / LOGIC BUILDER</span>
+    <span class="tag">03 / LOGIC BUILDER</span>
     <h2 data-en="Automate the house in plain language">ตั้งค่าอัตโนมัติได้ง่ายเหมือนพูดคุย</h2>
-    <p data-en="The Smart Gateway pulls weather forecasts and runs your rules — no coding required.">Smart Gateway ดึงพยากรณ์อากาศแล้วทำงานตามกฎที่คุณตั้ง โดยไม่ต้องเขียนโค้ด</p>
+    <p data-en="The Smart Gateway pulls weather forecasts and runs your rules — no coding required.">Smart Gateway ดึงพยากรณ์อากาศออนไลน์แล้วทำงานตามกฎที่คุณตั้ง โดยไม่ต้องเขียนโค้ด</p>
   </div>
   <div class="simgrid" style="grid-template-columns:1.35fr 1fr">
     <div class="card">
@@ -456,20 +397,24 @@ footer{border-top:1px solid var(--line);padding:52px 0;text-align:center;color:v
   </div>
 </section>
 
-<!-- ============ ROI ============ -->
+<!-- ================= ROI ================= -->
 <section id="roi" class="wrap reveal">
   <div class="shead">
-    <span class="tag">05 / SAVINGS & PAYBACK</span>
+    <span class="tag">04 / SAVINGS & PAYBACK</span>
     <h2 data-en="What it means for your bill">แล้วค่าไฟคุณจะเป็นอย่างไร</h2>
     <p data-en="Adjust the sliders to model your own home. Figures are indicative estimates.">เลื่อนค่าให้ตรงกับบ้านคุณ ตัวเลขเป็นการประมาณการเบื้องต้น</p>
   </div>
   <div class="roigrid">
     <div class="card">
-      <div class="fld"><label><span data-en="Monthly electricity bill">ค่าไฟต่อเดือน</span><b id="lb1">6,000 ฿</b></label><input type="range" id="bill" min="1500" max="30000" step="500" value="6000"></div>
-      <div class="fld"><label><span data-en="Usable roof area">พื้นที่หลังคาที่ใช้ได้</span><b id="lb2">45 m²</b></label><input type="range" id="area" min="15" max="150" step="5" value="45"></div>
-      <div class="fld"><label><span data-en="Average sun hours / day">ชั่วโมงแดดเฉลี่ยต่อวัน</span><b id="lb3">4.8 h</b></label><input type="range" id="sun" min="3.5" max="6" step="0.1" value="4.8"></div>
-      <div class="fld"><label><span data-en="Wind turbine add-on">เพิ่มกังหันลม</span><b id="lb4">ใส่</b></label><input type="range" id="wind" min="0" max="1" step="1" value="1"></div>
-      <p style="color:var(--dim);font-size:12.5px;line-height:1.75" data-en="Assumes 4.20 THB/kWh tariff, 80% performance ratio, solar thermal offsetting 70% of water-heating load.">อ้างอิงค่าไฟ 4.20 บาท/หน่วย, performance ratio 80%, ระบบน้ำร้อนลดภาระทำน้ำร้อน 70%</p>
+      <div class="fld"><label><span data-en="Monthly electricity bill">ค่าไฟต่อเดือน</span><b id="lb1">6,000 ฿</b></label>
+        <input type="range" id="bill" min="1500" max="30000" step="500" value="6000"></div>
+      <div class="fld"><label><span data-en="Usable roof area">พื้นที่หลังคาที่ใช้ได้</span><b id="lb2">45 m²</b></label>
+        <input type="range" id="area" min="15" max="150" step="5" value="45"></div>
+      <div class="fld"><label><span data-en="Average sun hours / day">ชั่วโมงแดดเฉลี่ยต่อวัน</span><b id="lb3">4.8 h</b></label>
+        <input type="range" id="sun" min="3.5" max="6" step="0.1" value="4.8"></div>
+      <div class="fld"><label><span data-en="Wind turbine add-on">เพิ่มกังหันลม</span><b id="lb4">ใส่</b></label>
+        <input type="range" id="wind" min="0" max="1" step="1" value="1"></div>
+      <p style="color:var(--dim);font-size:12px;line-height:1.7" data-en="Assumes 4.20 THB/kWh tariff, 80% performance ratio, solar thermal offsetting 70% of water-heating load.">อ้างอิงค่าไฟ 4.20 บาท/หน่วย, performance ratio 80%, ระบบน้ำร้อนลดภาระทำน้ำร้อน 70%</p>
     </div>
     <div class="card">
       <div class="res">
@@ -485,17 +430,19 @@ footer{border-top:1px solid var(--line);padding:52px 0;text-align:center;color:v
   </div>
 </section>
 
-<!-- ============ APP + TABLE ============ -->
+<!-- ================= APP + TABLE ================= -->
 <section class="wrap reveal">
-  <div class="shead"><span class="tag">06 / SOLAR HOME APP</span>
-    <h2 data-en="Your whole house, in one screen">ทั้งบ้านอยู่ในหน้าจอเดียว</h2></div>
+  <div class="shead">
+    <span class="tag">05 / SOLAR HOME APP</span>
+    <h2 data-en="Your whole house, in one screen">ทั้งบ้านอยู่ในหน้าจอเดียว</h2>
+  </div>
   <div class="simgrid" style="grid-template-columns:1fr 1.4fr;align-items:center">
     <div class="phone">
       <div class="pnotch"></div>
-      <div style="font-size:12.5px;color:var(--dim)" data-en="Good evening, Khun Arun">สวัสดีตอนเย็น คุณอรุณ</div>
-      <div style="font:700 1.65rem 'JetBrains Mono';color:var(--ok);margin:4px 0 14px" id="appNet">+3.4 kW</div>
+      <div style="font-size:12px;color:var(--dim)" data-en="Good evening, Khun Arun">สวัสดีตอนเย็น คุณอรุณ</div>
+      <div style="font:700 1.6rem 'JetBrains Mono';color:var(--ok);margin:4px 0 14px" id="appNet">+3.4 kW</div>
       <div class="ptile"><div class="t" data-en="Solar + Wind today">โซลาร์ + ลม วันนี้</div><div class="v" style="color:var(--power)">38.6 kWh</div></div>
-      <div class="ptile"><div class="t" data-en="Hot water · main tank">น้ำร้อน · ถังหลัก</div><div class="v" style="color:var(--thermal)">62 °C</div></div>
+      <div class="ptile"><div class="t" data-en="Hot water · Zone tank">น้ำร้อน · ถังหลัก</div><div class="v" style="color:var(--thermal)">62 °C</div></div>
       <div class="ptile"><div class="t" data-en="Climate zones active">โซนอุณหภูมิที่ทำงาน</div><div class="v" style="color:var(--climate)">3 / 5</div></div>
       <div class="ptile" style="background:rgba(52,211,153,.1)"><div class="t" data-en="Automations running">ออโตเมชันที่ทำงานอยู่</div><div class="v" style="color:var(--ok)">7</div></div>
     </div>
@@ -507,414 +454,292 @@ footer{border-top:1px solid var(--line);padding:52px 0;text-align:center;color:v
         <tr><td data-en="Temperature control">การคุมอุณหภูมิ</td><td class="bad" data-en="Per appliance">แยกตามเครื่อง</td><td class="good" data-en="5 independent zones">5 โซนอิสระ</td></tr>
         <tr><td data-en="Visibility">การมองเห็นข้อมูล</td><td class="bad" data-en="Monthly bill only">รู้ตอนบิลมา</td><td class="good" data-en="Real-time, 1-sec resolution">เรียลไทม์ ทุก 1 วินาที</td></tr>
         <tr><td data-en="Planning">การวางแผน</td><td class="bad" data-en="Reactive">ตามมีตามเกิด</td><td class="good" data-en="Weather-predictive">ใช้พยากรณ์อากาศล่วงหน้า</td></tr>
+        <tr><td data-en="Cost trend">แนวโน้มค่าใช้จ่าย</td><td class="bad" data-en="Rises with tariffs">ขึ้นตามค่าไฟ</td><td class="good" data-en="Low & predictable">ต่ำและคาดการณ์ได้</td></tr>
       </table>
     </div>
   </div>
 </section>
 
-<section class="wrap reveal" style="text-align:center;padding-bottom:100px">
+<section class="wrap reveal" style="text-align:center;padding-bottom:90px">
   <div class="card" style="padding:52px 28px;background:linear-gradient(135deg,rgba(255,176,32,.1),rgba(34,211,238,.07))">
     <h2 style="font-size:clamp(1.5rem,3.4vw,2.4rem)" data-en="Ready to see it on your own roof?">พร้อมดูระบบบนหลังคาบ้านคุณแล้วหรือยัง</h2>
-    <p class="sub" style="margin:16px auto 28px" data-en="Book a free site survey — we'll return a personalised version of this blueprint within 7 days.">จองสำรวจหน้างานฟรี — เราจะส่งผังระบบเวอร์ชันของบ้านคุณกลับไปภายใน 7 วัน</p>
+    <p class="sub" style="margin:16px auto 28px" data-en="Book a free site survey — we'll return a personalised version of this exact blueprint for your home within 7 days.">จองสำรวจหน้างานฟรี — เราจะส่งผังระบบแบบนี้เวอร์ชันของบ้านคุณกลับไปภายใน 7 วัน</p>
     <div class="cta">
       <button class="btn btn-p" data-en="Book free survey">จองสำรวจฟรี</button>
-      <button class="btn btn-v" onclick="openPdf()" data-en="📑 View full report (PDF)">📑 ดูรายงานฉบับเต็ม (PDF)</button>
+      <button class="btn btn-g" data-en="Download spec sheet (PDF)">ดาวน์โหลดสเปก (PDF)</button>
     </div>
   </div>
 </section>
 
 <footer><div class="wrap">SOLARIS · The Smart Solar Blueprint — <span data-en="interactive sales presentation">สื่อนำเสนอการขายแบบอินเทอร์แอ็กทีฟ</span></div></footer>
 
-<div class="fab"><button class="btn btn-v" onclick="openPdf()" title="Presentation">📑</button></div>
-
-<!-- ============ PDF MODAL ============ -->
-<div class="ov" id="pdfOv">
-  <div class="modal">
-    <div class="mhead">
-      <span style="font-size:20px">📑</span>
-      <h3 id="pdfTitle" data-en="Presentation — The Smart Solar Blueprint">พรีเซนเทชัน — The Smart Solar Blueprint</h3>
-      <button class="btn btn-g" onclick="pdfPick()" data-en="Upload PDF">อัปโหลด PDF</button>
-      <button class="btn btn-g" id="pdfNew" style="display:none" onclick="pdfOpenTab()" data-en="Open in new tab">เปิดแท็บใหม่</button>
-      <button class="btn btn-g" id="pdfClear" style="display:none" onclick="pdfReset()" data-en="Remove">นำออก</button>
-      <button class="btn btn-p" onclick="closePdf()">✕</button>
-    </div>
-    <div class="mbody" id="pdfBody">
-      <iframe id="pdfFrame" style="display:none"></iframe>
-      <div class="drop" id="pdfDrop">
-        <div class="box" id="pdfBox">
-          <div class="ic">📄</div>
-          <h4 data-en="Attach the report PDF here">ฝากไฟล์รายงาน PDF ไว้ตรงนี้</h4>
-          <p data-en="Drag & drop a PDF, click upload, or paste a public link. Viewers can then open the report right inside this app.">
-            ลากไฟล์ PDF มาวาง กดอัปโหลด หรือวางลิงก์สาธารณะ — ผู้ชมจะกดเปิดอ่านรายงานได้ทันทีในแอปนี้
-          </p>
-          <button class="btn btn-v" onclick="pdfPick()" data-en="⬆ Choose PDF file">⬆ เลือกไฟล์ PDF</button>
-          <div class="urlrow">
-            <input type="text" id="pdfUrl" placeholder="https://.../report.pdf">
-            <button class="btn btn-g" onclick="pdfFromUrl()" data-en="Embed link">ฝังลิงก์</button>
-          </div>
-          <div class="hint" data-en="Tip: a pasted link is saved in this browser so it loads automatically next time. Uploaded files stay on your device only — nothing is sent anywhere.">
-            เคล็ดลับ: ลิงก์ที่วางจะถูกจำไว้ในเบราว์เซอร์นี้ ครั้งหน้าเปิดมาจะโหลดให้เอง · ไฟล์ที่อัปโหลดอยู่ในเครื่องคุณเท่านั้น ไม่ถูกส่งออกไปไหน
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<input type="file" id="pdfFile" accept="application/pdf" style="display:none">
-
 <div id="tour">
-  <div class="n" id="tourN">1 / 7</div><p id="tourT"></p>
+  <div class="n" id="tourN">1 / 6</div>
+  <p id="tourT"></p>
   <button class="btn btn-g" onclick="endTour()">✕</button>
   <button class="btn btn-p" onclick="nextTour()" data-en="Next">ถัดไป</button>
 </div>
 
 <script>
-/* ========== PDF PRESENTATION ========== */
-const PDFKEY='solaris_pdf_url';
-function openPdf(){document.getElementById('pdfOv').classList.add('show');document.body.style.overflow='hidden';}
-function closePdf(){document.getElementById('pdfOv').classList.remove('show');document.body.style.overflow='';}
-function pdfPick(){document.getElementById('pdfFile').click();}
-function pdfShow(src,persist){
-  const f=document.getElementById('pdfFrame');
-  f.src=src+(src.startsWith('blob:')?'':'#view=FitH');
-  f.style.display='block';
-  document.getElementById('pdfDrop').style.display='none';
-  document.getElementById('pdfNew').style.display='';
-  document.getElementById('pdfClear').style.display='';
-  if(persist)localStorage.setItem(PDFKEY,src);
-  window._pdfSrc=src;
-}
-function pdfReset(){
-  const f=document.getElementById('pdfFrame');f.src='';f.style.display='none';
-  document.getElementById('pdfDrop').style.display='grid';
-  document.getElementById('pdfNew').style.display='none';
-  document.getElementById('pdfClear').style.display='none';
-  localStorage.removeItem(PDFKEY);window._pdfSrc=null;
-}
-function pdfOpenTab(){if(window._pdfSrc)window.open(window._pdfSrc,'_blank');}
-function pdfFromUrl(){
-  const u=document.getElementById('pdfUrl').value.trim();
-  if(!u)return;
-  let s=u;
-  const gd=u.match(/drive\.google\.com\/file\/d\/([^/]+)/);
-  if(gd)s='https://drive.google.com/file/d/'+gd[1]+'/preview';
-  pdfShow(s,true);
-}
-document.getElementById('pdfFile').addEventListener('change',e=>{
-  const f=e.target.files[0]; if(f) pdfShow(URL.createObjectURL(f),false);
-});
-const box=document.getElementById('pdfBox');
-['dragenter','dragover'].forEach(ev=>box.addEventListener(ev,e=>{e.preventDefault();box.classList.add('hot')}));
-['dragleave','drop'].forEach(ev=>box.addEventListener(ev,e=>{e.preventDefault();box.classList.remove('hot')}));
-box.addEventListener('drop',e=>{const f=e.dataTransfer.files[0];if(f&&f.type==='application/pdf')pdfShow(URL.createObjectURL(f),false);});
-document.getElementById('pdfOv').addEventListener('click',e=>{if(e.target.id==='pdfOv')closePdf()});
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closePdf()});
-(function(){const s=localStorage.getItem(PDFKEY); if(s)pdfShow(s,false);})();
-
-/* ========== EQUIPMENT DATA ========== */
-const EQ={
- solar:{ic:'▦',c:'var(--power)',cat:'① POWER GENERATION',
-  th:['แผงโซลาร์ 13.2 kWp','แผง Mono-PERC 24 แผ่นบนหลังคาฝั่งรับแดดหลัก ผลิตไฟฟ้ากระแสตรงส่งลงไฮบริดอินเวอร์เตอร์ตลอดกลางวัน'],
-  en:['Solar Array 13.2 kWp','24 Mono-PERC modules on the main sun-facing roof, sending DC power down to the hybrid inverter all day.'],
-  specs:[['Module','Mono-PERC 550 W'],['Quantity','24 panels'],['Capacity','13.2 kWp'],['Efficiency','21.8 %'],['Warranty','25 years']],
-  ioTh:['แสงอาทิตย์ (Irradiance)','ไฟ DC → ④ ไฮบริดอินเวอร์เตอร์','ค่าการผลิตราย 1 วินาที → ⑤ Data-logging Unit'],
-  ioEn:['Solar irradiance','DC power → ④ Hybrid Inverter','Per-second output data → ⑤ Data-logging Unit'],
-  bth:'ผลิตไฟได้สูงสุดพอดีกับช่วงที่บ้านใช้ไฟแพงที่สุดของวัน',ben:'Peak output lands exactly when your tariff is highest.'},
- wind:{ic:'✦',c:'var(--power)',cat:'② POWER GENERATION',
-  th:['กังหันลมแนวตั้ง 1.5 kW','เติมเต็มช่วงที่แสงแดดหาย — กลางคืน ฝนตก ฟ้าปิด ส่งไฟเข้าอินเวอร์เตอร์ตัวเดียวกัน'],
-  en:['Vertical-Axis Turbine 1.5 kW','Covers the hours solar cannot — night, rain, heavy cloud — feeding the same inverter.'],
-  specs:[['Rated power','1.5 kW'],['Cut-in speed','2.5 m/s'],['Noise','< 35 dB'],['Type','VAWT'],['Service','1× / year']],
-  ioTh:['ลม 2.5 m/s ขึ้นไป','ไฟ AC → ④ ไฮบริดอินเวอร์เตอร์','ความเร็วลม/รอบหมุน → ⑤ Data-logging Unit'],
-  ioEn:['Wind ≥ 2.5 m/s','AC power → ④ Hybrid Inverter','Wind speed & RPM → ⑤ Data-logging Unit'],
-  bth:'บ้านยังมีไฟใช้แม้ทั้งวันไม่มีแดดเลย',ben:'The house keeps generating even on a day with zero sun.'},
- collector:{ic:'≋',c:'var(--thermal)',cat:'③ SOLAR THERMAL',
-  th:['แผงรับความร้อนแสงอาทิตย์ 4 m²','ใช้ “ความร้อน” จากแดดต้มน้ำโดยตรงผ่าน Glycol loop 85°C ไม่ต้องแปลงเป็นไฟฟ้าก่อน จึงประหยัดกว่ามาก'],
-  en:['Solar Thermal Collector 4 m²','Uses solar heat directly via an 85°C glycol loop — no electrical conversion, far higher efficiency.'],
-  specs:[['Aperture','4.0 m²'],['Type','Flat-plate selective'],['Thermal eff.','78 %'],['Offset','up to 70 %'],['Freeze protection','Glycol']],
-  ioTh:['ความร้อนจากแสงอาทิตย์','ของเหลวร้อน 85°C → ⑦ ถังน้ำร้อน 300 L','อุณหภูมิแผง → ⑤ Data-logging Unit'],
-  ioEn:['Solar heat','85°C fluid → ⑦ Hot-Water Cylinder','Collector temp → ⑤ Data-logging Unit'],
-  bth:'ลดค่าไฟส่วนทำน้ำร้อนได้ถึง 70% ซึ่งเป็นภาระที่คนมองข้ามที่สุด',ben:'Cuts up to 70% of water-heating electricity.'},
- inverter:{ic:'⚡',c:'var(--power)',cat:'④ CONVERSION HUB',
-  th:['ไฮบริดอินเวอร์เตอร์ 10 kW','จุดรวมพลังงานทั้งหมด รับจากโซลาร์ + กังหันลม + กริด แล้วเลือกแหล่งที่ถูกที่สุดจ่ายให้บ้านทุกวินาที'],
-  en:['Hybrid Inverter 10 kW','The convergence point — blends solar, wind and grid, choosing the cheapest source every second.'],
-  specs:[['Output','10 kW'],['MPPT','2 trackers'],['Efficiency','97.6 %'],['Switchover','< 10 ms'],['Rating','IP65']],
-  ioTh:['① แผงโซลาร์ (DC) + ② กังหันลม (AC) + กริด','AC 230 V → โหลดทั้งบ้าน และ ⑩ แบตเตอรี่ LFP','สถานะการจ่ายไฟ → ⑤ Data-logging Unit'],
-  ioEn:['① Solar (DC) + ② Wind (AC) + grid','AC 230 V → house loads & ⑩ LFP Battery','Supply status → ⑤ Data-logging Unit'],
-  bth:'ไฟไม่ดับตอนกริดตก เพราะสลับแหล่งจ่ายภายใน 10 มิลลิวินาที',ben:'No blackout flicker — sub-10 ms source switching.'},
- battery:{ic:'▤',c:'var(--ok)',cat:'⑩ ELECTRICAL STORAGE',
-  th:['แบตเตอรี่ LFP 15 kWh','ปลายทางของไฟส่วนเกินตอนกลางวัน และเป็นต้นทางของไฟตอนกลางคืน ทำให้ค่าไฟคาดการณ์ได้'],
-  en:['LFP Battery 15 kWh','The destination for daytime surplus and the source for night-time supply.'],
-  specs:[['Capacity','15 kWh'],['Chemistry','LiFePO₄'],['Cycles','> 6,000'],['DoD','95 %'],['Backup','~14 h essentials']],
-  ioTh:['ไฟส่วนเกินจาก ④ ไฮบริดอินเวอร์เตอร์','จ่ายกลับเข้า ④ เพื่อใช้งานกลางคืน','State of Charge → ⑤ Data-logging Unit'],
-  ioEn:['Surplus from ④ Hybrid Inverter','Discharges back to ④ at night','State of charge → ⑤ Data-logging Unit'],
-  bth:'ไฟไม่ดับตอนกลางคืน และไม่ต้องซื้อไฟแพงช่วงพีค',ben:'Night independence and zero peak-tariff exposure.'},
- tank:{ic:'◍',c:'var(--thermal)',cat:'⑦ THERMAL STORAGE',
-  th:['ถังน้ำร้อนอัจฉริยะ 300 L','ปลายทางของความร้อนจากแผง ③ จ่ายน้ำร้อน 62°C ไปห้องน้ำและครัว ส่วนที่เหลือส่งลง ⑧ ถังใต้ดิน'],
-  en:['Smart Hot-Water Cylinder 300 L','Destination of collector heat — delivers 62°C water to bathrooms and kitchen, surplus to ⑧ underground store.'],
-  specs:[['Volume','300 L'],['Insulation','60 mm PU'],['Heat loss','< 1.2 kWh/day'],['Sensors','3-level'],['Backup element','3 kW']],
-  ioTh:['③ แผงรับความร้อน (Glycol 85°C)','น้ำร้อน 62°C → ห้องน้ำ/ครัว · ความร้อนเหลือ → ⑧ ถังใต้ดิน','อุณหภูมิ 3 ระดับ → ⑤ Data-logging Unit'],
-  ioEn:['③ Collector glycol loop at 85°C','62°C water → bathrooms/kitchen · surplus → ⑧ store','3-level temps → ⑤ Data-logging Unit'],
-  bth:'อาบน้ำอุ่นได้ทั้งบ้านโดยแทบไม่แตะค่าไฟ',ben:'Hot showers for everyone with almost no electricity.'},
- store:{ic:'▣',c:'var(--thermal)',cat:'⑧ BUFFER STORAGE',
-  th:['ถังกักเก็บใต้ดิน 1,000 L','บัฟเฟอร์ความร้อนใต้ดินอุณหภูมิคงที่ ~26°C เก็บพลังงานส่วนเกินไว้ใช้ในวันที่อากาศไม่เป็นใจได้นาน 72 ชม.'],
-  en:['Underground Thermal Store 1,000 L','A buried buffer at a stable ~26°C, banking surplus for up to 72 hours of bad weather.'],
-  specs:[['Volume','1,000 L'],['Depth','1.8 m'],['Ground temp','~26 °C'],['Retention','72 h'],['Material','HDPE']],
-  ioTh:['ความร้อนส่วนเกินจาก ⑦ ถังน้ำร้อน','คืนความร้อนกลับสู่ ⑦ เมื่ออุณหภูมิตก','ระดับพลังงานสำรอง → ⑤ Data-logging Unit'],
-  ioEn:['Surplus heat from ⑦ Cylinder','Returns heat to ⑦ when temps drop','Reserve level → ⑤ Data-logging Unit'],
-  bth:'มีพลังงานสำรองข้ามวัน ไม่ใช่แค่ข้ามคืน',ben:'Reserves that carry across days, not just overnight.'},
- thermo:{ic:'◐',c:'var(--climate)',cat:'⑨ CLIMATE CONTROL',
-  th:['Thermostat Zone Control (5 โซน)','เซนเซอร์ในแต่ละห้องรายงานอุณหภูมิ/ความชื้น/การมีคน แล้วรับคำสั่ง setpoint กลับมาจาก ⑥ Smart Gateway'],
-  en:['Thermostat Zone Control (5 zones)','Per-room sensors report temperature, humidity and presence, then receive setpoints back from ⑥ Smart Gateway.'],
-  specs:[['Zones','5'],['Accuracy','±0.3 °C'],['Sensing','Temp + RH + presence'],['Schedule','Per zone/day'],['Control','App / panel / voice']],
-  ioTh:['สภาพห้องจริง + คำสั่ง setpoint จาก ⑥ Smart Gateway','สั่งวาล์ว/แอร์ในโซนนั้น ๆ','ข้อมูลรายห้อง → ⑤ Data-logging Unit'],
-  ioEn:['Room conditions + setpoints from ⑥ Gateway','Drives zone valves / air handlers','Per-room data → ⑤ Data-logging Unit'],
-  bth:'ไม่ต้องจ่ายค่าพลังงานให้ห้องที่ไม่มีคนอยู่',ben:'Stop paying to condition empty rooms.'},
- logger:{ic:'◷',c:'var(--data)',cat:'⑤ DATA ACQUISITION',
-  th:['Data-logging Unit','จุดรวมข้อมูลทั้งระบบ — รับค่าจากโซลาร์ กังหันลม เทอร์โมสตัททุกโซน และถังน้ำ ทุก 1 วินาที ผ่าน Modbus/RS485 แล้วส่งต่อให้ ⑥ Smart Gateway'],
-  en:['Data-logging Unit','The data convergence point — reads solar, wind, all thermostats and the tank every second over Modbus/RS485, then forwards to ⑥ Smart Gateway.'],
-  specs:[['Channels','32'],['Resolution','1 second'],['Local storage','90 days'],['Protocol','Modbus / RS485'],['Accuracy','±0.5 %']],
-  ioTh:['① ② ③ ⑦ ⑧ ⑨ ⑩ ทุกเซนเซอร์ในระบบ','ชุดข้อมูลรวม → ⑥ Smart Gateway','เก็บสำรองในเครื่อง 90 วัน'],
-  ioEn:['Every sensor: ① ② ③ ⑦ ⑧ ⑨ ⑩','Consolidated dataset → ⑥ Smart Gateway','90-day local backup'],
-  bth:'รู้ว่าไฟหายไปไหน ไม่ใช่แค่รู้ยอดบิลตอนสิ้นเดือน',ben:'You learn where the energy goes, not just what the bill says.'},
- gateway:{ic:'◈',c:'var(--data)',cat:'⑥ INTELLIGENCE',
-  th:['Smart Gateway','สมองของบ้าน — รับข้อมูลจาก ⑤ รวมกับพยากรณ์อากาศออนไลน์ ตัดสินใจสั่งงาน ⑨ Thermostat และ ⑦ ถังน้ำร้อน พร้อมส่งข้อมูลขึ้นคลาวด์ให้ ⑪ แอป'],
-  en:['Smart Gateway','The brain — combines ⑤ data with online forecasts, commands ⑨ thermostats and ⑦ the cylinder, and streams to ⑪ the app via cloud.'],
-  specs:[['Compute','Quad-core edge CPU'],['Network','Wi-Fi 6 / LAN / LoRa'],['Weather API','Hourly, 7-day'],['Rules','Unlimited'],['Offline','Full local control']],
-  ioTh:['⑤ Data-logging Unit + พยากรณ์อากาศออนไลน์','คำสั่งควบคุม → ⑨ Thermostat, ⑦ ถังน้ำร้อน, ④ อินเวอร์เตอร์','สถานะเรียลไทม์ → คลาวด์ → ⑪ Solar Home App'],
-  ioEn:['⑤ Logger + online weather forecast','Commands → ⑨ Thermostats, ⑦ Cylinder, ④ Inverter','Live status → cloud → ⑪ Solar Home App'],
-  bth:'ต้มน้ำร้อนไว้ล่วงหน้าก่อนวันที่ฟ้าจะปิด — โดยที่คุณไม่ต้องสั่ง',ben:'Heats water the day before clouds arrive — unprompted.'},
- app:{ic:'▷',c:'var(--data)',cat:'⑪ USER EXPERIENCE',
-  th:['Solar Home App','ปลายทางของข้อมูลทั้งหมด และจุดเริ่มต้นของคำสั่งจากคุณ ดูการผลิต/การใช้ ปรับอุณหภูมิ และตั้งกฎอัตโนมัติได้จากทุกที่'],
-  en:['Solar Home App','The final destination of all data and the origin of your commands — monitor, adjust and automate from anywhere.'],
-  specs:[['Platform','iOS / Android / Web'],['Latency','< 2 s'],['History','Unlimited cloud'],['Alerts','Push + email'],['Users','Multi-role']],
-  ioTh:['สถานะเรียลไทม์จาก ⑥ Smart Gateway ผ่านคลาวด์','คำสั่งของคุณ → กลับไปที่ ⑥ Smart Gateway → อุปกรณ์ปลายทาง','รายงานสรุปรายวัน/เดือน'],
-  ioEn:['Live status from ⑥ Gateway via cloud','Your commands → back to ⑥ → field devices','Daily & monthly reports'],
-  bth:'คุมบ้านทั้งหลังได้แม้อยู่คนละประเทศ',ben:'Run the entire home from another continent.'}
+/* ================= DATA ================= */
+const EQ = {
+  solar:{ic:'▦',c:'var(--power)',cat:'POWER GENERATION',
+    th:['ชุดแผงโซลาร์ประสิทธิภาพสูง','แผง Mono-PERC ติดตั้งบนหลังคาฝั่งรับแดดหลัก ผลิตไฟฟ้าเข้าสู่ระบบไฮบริดตลอดช่วงกลางวัน และชาร์จแบตเตอรี่สำรองไว้ใช้ตอนกลางคืน'],
+    en:['High-Efficiency Solar Array','Mono-PERC modules on the primary sun-facing roof plane, feeding the hybrid system all day and charging the reserve battery for night-time use.'],
+    specs:[['Module','Mono-PERC 550 W'],['Quantity','24 panels'],['Capacity','13.2 kWp'],['Efficiency','21.8 %'],['Tilt / Azimuth','15° / South'],['Warranty','25 years']],
+    bth:'ผลิตไฟได้สูงสุดในช่วงที่บ้านใช้ไฟแพงที่สุดของวัน',
+    ben:'Peak output lands exactly when your tariff is highest.'},
+  wind:{ic:'✦',c:'var(--power)',cat:'POWER GENERATION',
+    th:['กังหันลมแนวตั้ง','เติมเต็มช่วงที่แสงแดดหาย — กลางคืน ฝนตก หรือฟ้าปิด ทำให้ระบบจ่ายไฟได้ต่อเนื่องแบบไฮบริดจริง'],
+    en:['Vertical-Axis Wind Turbine','Covers the hours solar cannot — night, rain and heavy cloud — making the hybrid supply genuinely continuous.'],
+    specs:[['Rated power','1.5 kW'],['Cut-in speed','2.5 m/s'],['Noise','< 35 dB'],['Type','Vertical axis (VAWT)'],['Maintenance','1× / year']],
+    bth:'บ้านยังมีไฟใช้ แม้ทั้งวันไม่มีแดดเลย',
+    ben:'The house keeps generating even on a day without a single hour of sun.'},
+  collector:{ic:'≋',c:'var(--thermal)',cat:'SOLAR THERMAL',
+    th:['แผงรับความร้อนแสงอาทิตย์','ใช้ “ความร้อน” จากแสงแดดโดยตรงในการต้มน้ำ (เส้นสีแดงในผัง) ไม่ผ่านการแปลงเป็นไฟฟ้า จึงมีประสิทธิภาพสูงกว่ามาก'],
+    en:['Solar Thermal Collector','Uses the sun\'s heat directly to warm water (the solid red lines) instead of converting it to electricity first — far more efficient.'],
+    specs:[['Aperture area','4.0 m²'],['Type','Flat-plate, selective'],['Thermal efficiency','78 %'],['Water-heating offset','up to 70 %'],['Freeze protection','Glycol loop']],
+    bth:'ลดค่าไฟส่วนทำน้ำร้อนได้ถึง 70% ซึ่งเป็นภาระไฟที่คนมองข้ามที่สุด',
+    ben:'Cuts up to 70% of water-heating electricity — the most overlooked load in a home.'},
+  inverter:{ic:'⚡',c:'var(--power)',cat:'CONVERSION',
+    th:['ไฮบริดอินเวอร์เตอร์','สมองด้านพลังงาน รวมไฟจากโซลาร์ กังหันลม แบตเตอรี่ และกริด แล้วเลือกแหล่งที่ถูกที่สุดให้อัตโนมัติทุกวินาที'],
+    en:['Hybrid Inverter','The energy brain — blends solar, wind, battery and grid, automatically choosing the cheapest source every second.'],
+    specs:[['Rated output','10 kW'],['MPPT trackers','2'],['Efficiency','97.6 %'],['Switchover','< 10 ms'],['Protection','IP65']],
+    bth:'ไฟไม่ดับตอนกริดตก เพราะสลับแหล่งจ่ายภายใน 10 มิลลิวินาที',
+    ben:'No blackout flicker — source switching in under 10 ms.'},
+  battery:{ic:'▤',c:'var(--ok)',cat:'STORAGE',
+    th:['แบตเตอรี่ LFP','เก็บไฟส่วนเกินตอนกลางวันไว้ใช้ตอนกลางคืน ทำให้ค่าไฟคาดการณ์ได้และไม่พึ่งกริดในช่วงพีค'],
+    en:['LFP Battery Bank','Stores daytime surplus for night-time use, making bills predictable and cutting peak-hour grid reliance.'],
+    specs:[['Capacity','15 kWh'],['Chemistry','LiFePO₄'],['Cycles','> 6,000'],['DoD','95 %'],['Backup runtime','~14 h essentials']],
+    bth:'ไฟไม่ดับตอนกลางคืน และไม่ต้องซื้อไฟแพงช่วงพีค',
+    ben:'Night-time independence and zero peak-tariff exposure.'},
+  logger:{ic:'◷',c:'var(--data)',cat:'DATA ACQUISITION',
+    th:['Data-logging Unit','เก็บข้อมูลจากโซลาร์ กังหันลม เทอร์โมสตัททุกห้อง และถังน้ำร้อน อย่างละเอียดทุกวินาที เป็นวัตถุดิบให้ระบบตัดสินใจ'],
+    en:['Data-logging Unit','Collects readings from solar, wind, every room thermostat and the water tank — second-by-second raw material for every decision.'],
+    specs:[['Channels','32'],['Resolution','1 second'],['Local storage','90 days'],['Protocols','Modbus / RS485'],['Accuracy','±0.5 %']],
+    bth:'รู้ว่าไฟหายไปไหน ไม่ใช่แค่รู้ยอดบิลตอนสิ้นเดือน',
+    ben:'You learn where the energy goes — not just what the bill says.'},
+  gateway:{ic:'◈',c:'var(--data)',cat:'INTELLIGENCE',
+    th:['Smart Gateway','ประมวลผลข้อมูลทั้งหมด ดึงพยากรณ์อากาศออนไลน์ และสั่งงานอุปกรณ์แทนคุณ พร้อมส่งข้อมูลขึ้นคลาวด์ให้ควบคุมผ่านแอปได้ทุกที่'],
+    en:['Smart Gateway','Processes every data point, pulls online weather forecasts, commands the equipment for you and streams everything to the cloud for remote app control.'],
+    specs:[['Compute','Quad-core edge CPU'],['Connectivity','Wi-Fi 6 / LAN / LoRa'],['Weather API','Hourly, 7-day'],['Rules engine','Unlimited'],['Offline mode','Full local control']],
+    bth:'ต้มน้ำร้อนไว้ล่วงหน้าก่อนวันที่ฟ้าจะปิด — โดยที่คุณไม่ต้องสั่ง',
+    ben:'Heats the water the day before a cloudy front arrives — without you asking.'},
+  tank:{ic:'◍',c:'var(--thermal)',cat:'THERMAL STORAGE',
+    th:['ถังน้ำร้อนอัจฉริยะ','เก็บน้ำร้อนที่ได้จากแสงแดดพร้อมเซนเซอร์อุณหภูมิหลายชั้น ระบบรู้เสมอว่าเหลือน้ำร้อนใช้ได้อีกเท่าไร'],
+    en:['Smart Hot-Water Cylinder','Stores solar-heated water with multi-level temperature sensing, so the system always knows exactly how much hot water is left.'],
+    specs:[['Volume','300 L'],['Insulation','60 mm PU'],['Heat loss','< 1.2 kWh/day'],['Sensors','3-level stratification'],['Backup element','3 kW (rarely used)']],
+    bth:'อาบน้ำอุ่นได้ทั้งบ้านโดยแทบไม่แตะค่าไฟ',
+    ben:'Hot showers for the whole household with almost no electricity.'},
+  store:{ic:'▣',c:'var(--thermal)',cat:'BUFFER STORAGE',
+    th:['ถังกักเก็บใต้ดิน','บัฟเฟอร์ความร้อนขนาดใหญ่ใต้ดิน อุณหภูมิคงที่ตลอดปี ใช้เก็บพลังงานส่วนเกินไว้รับมือวันที่อากาศไม่เป็นใจ'],
+    en:['Underground Thermal Store','A large buried buffer at a stable year-round temperature, banking surplus energy for days the weather turns.'],
+    specs:[['Volume','1,000 L'],['Depth','1.8 m'],['Ground temp','~26 °C stable'],['Retention','72 h'],['Material','Food-grade HDPE']],
+    bth:'มีพลังงานสำรองข้ามวัน ไม่ใช่แค่ข้ามคืน',
+    ben:'Reserves that carry across days, not just overnight.'},
+  thermo:{ic:'◐',c:'var(--climate)',cat:'CLIMATE CONTROL',
+    th:['Thermostat Zone Control','ควบคุมอุณหภูมิแยกอิสระในแต่ละห้อง (เส้นสีฟ้าในผัง) ห้องที่ไม่มีคนอยู่จะไม่ถูกปรับอุณหภูมิให้เปลืองพลังงาน'],
+    en:['Thermostat Zone Control','Independent per-room temperature management (the cyan lines). Empty rooms simply don\'t get conditioned.'],
+    specs:[['Zones','5'],['Accuracy','±0.3 °C'],['Sensing','Temp + humidity + presence'],['Schedule','Per-zone, per-day'],['Control','App / wall panel / voice']],
+    bth:'ไม่ต้องจ่ายค่าพลังงานให้ห้องที่ไม่มีคนอยู่',
+    ben:'Stop paying to condition rooms nobody is in.'},
+  app:{ic:'▷',c:'var(--data)',cat:'USER EXPERIENCE',
+    th:['Solar Home App','แดชบอร์ดเรียลไทม์ ดูการผลิตและการใช้พลังงาน ปรับอุณหภูมิ และสร้างเงื่อนไขอัตโนมัติ (Logic Builder) ได้จากทุกที่ในโลก'],
+    en:['Solar Home App','A real-time dashboard for production and consumption, temperature control, and the Logic Builder for automation — from anywhere in the world.'],
+    specs:[['Platform','iOS / Android / Web'],['Latency','< 2 s'],['History','Unlimited cloud'],['Alerts','Push + email'],['Users','Multi-user roles']],
+    bth:'คุมบ้านทั้งหลังได้แม้อยู่คนละประเทศ',
+    ben:'Run the entire home from another continent.'}
 };
 
-/* ========== FLOW CHAINS ========== */
-const CHAINS=[
- {layer:'power',c:'var(--power)',bdg:'① POWER',
-  th:'เส้นทางไฟฟ้า — จากแดดและลม สู่ปลั๊กทุกจุดในบ้าน',
-  en:'Power path — from sun and wind to every socket',
-  steps:[
-   {rTh:'จุดกำเนิด',rEn:'SOURCE',nTh:'แผงโซลาร์ 13.2 kWp + กังหันลม 1.5 kW',nEn:'Solar 13.2 kWp + Wind 1.5 kW',dTh:'ติดตั้งบนหลังคาและเสาข้างบ้าน',dEn:'Roof-mounted array and mast turbine'},
-   {rTh:'ทางผ่าน',rEn:'ROUTE',nTh:'ไฮบริดอินเวอร์เตอร์ 10 kW',nEn:'Hybrid Inverter 10 kW',dTh:'แปลง DC/AC และเลือกแหล่งจ่ายที่ถูกที่สุด',dEn:'DC/AC conversion, cheapest-source logic'},
-   {rTh:'พักเก็บ',rEn:'BUFFER',nTh:'แบตเตอรี่ LFP 15 kWh',nEn:'LFP Battery 15 kWh',dTh:'เก็บไฟส่วนเกินกลางวันไว้ใช้กลางคืน',dEn:'Banks daytime surplus for the night'},
-   {rTh:'ปลายทาง',rEn:'DESTINATION',nTh:'โหลดทั้งบ้าน AC 230 V',nEn:'Whole-house loads at AC 230 V',dTh:'แอร์ ไฟฟ้าแสงสว่าง เครื่องใช้ไฟฟ้าทุกจุด',dEn:'HVAC, lighting and all appliances'}],
-  cnTh:['DC 13.2 kWp','AC 230 V','จ่าย/ชาร์จ'],cnEn:['DC 13.2 kWp','AC 230 V','charge/discharge'],
-  oTh:'<b>ผลลัพธ์:</b> จ่ายไฟต่อเนื่อง 24 ชั่วโมง ลดการซื้อไฟจากกริดได้ 60–85% และไม่มีไฟกระพริบตอนกริดตก (สลับแหล่งภายใน 10 ms)',
-  oEn:'<b>Outcome:</b> 24-hour continuous supply, 60–85% less grid purchase, and no flicker during outages (sub-10 ms switchover)'},
+const SCEN = {
+  sunny:{s:11.8,sm:13.2,w:0.3,b:94,t:68,
+    th:'พยากรณ์อากาศแจ้งว่าแดดแรงต่อเนื่อง 6 ชั่วโมง ระบบจึงเร่งต้มน้ำร้อนเต็มถังก่อนบ่าย แล้วเก็บพลังงานส่วนเกินลงแบตเตอรี่และถังใต้ดิน',
+    en:'Forecast shows 6 hours of strong sun. The system front-loads water heating before noon, then banks the surplus into the battery and underground store.'},
+  cloudy:{s:3.1,sm:13.2,w:0.9,b:71,t:54,
+    th:'ตรวจพบเมฆหนาเข้าปกคลุม ระบบดึงพลังงานที่สำรองไว้เมื่อวานจากถังใต้ดินมาใช้ก่อน และเลื่อนงานที่กินพลังงานสูงไปช่วงที่แดดกลับมา',
+    en:'Heavy cloud detected. The system draws on yesterday\'s reserves from the underground store and defers high-load tasks until the sun returns.'},
+  windy:{s:2.4,sm:13.2,w:1.5,b:88,t:61,
+    th:'ลมแรงทำให้กังหันเดินเต็มกำลัง ชดเชยแสงแดดที่หายไปเกือบทั้งหมด ระบบใช้จังหวะนี้ชาร์จแบตเตอรี่กลับขึ้นมาเต็ม',
+    en:'Strong winds push the turbine to rated output, offsetting nearly all the lost solar. The system uses the window to top the battery back up.'},
+  night:{s:0,sm:13.2,w:1.1,b:63,t:58,
+    th:'กลางคืนไม่มีแสงแดด แต่กังหันลมและแบตเตอรี่ยังจ่ายไฟให้ทั้งบ้านได้ตามปกติ ระบบลดอุณหภูมิโซนที่ไม่มีคนอยู่ลงอัตโนมัติ',
+    en:'No sun at night, but wind and battery carry the whole house. Unoccupied zones are automatically set back.'}
+};
 
- {layer:'thermal',c:'var(--thermal)',bdg:'② HEAT',
-  th:'เส้นทางความร้อน — เส้นสีแดงจากแผงรับความร้อนสู่ก๊อกน้ำร้อน',
-  en:'Heat path — the red line from collector to hot tap',
-  steps:[
-   {rTh:'จุดกำเนิด',rEn:'SOURCE',nTh:'แผงรับความร้อนแสงอาทิตย์ 4 m²',nEn:'Solar Thermal Collector 4 m²',dTh:'รับความร้อนตรงจากแดด ไม่แปลงเป็นไฟ',dEn:'Captures heat directly, no conversion'},
-   {rTh:'ทางผ่าน',rEn:'ROUTE',nTh:'Glycol Loop 85°C',nEn:'Glycol Loop at 85°C',dTh:'ท่อกันแข็งตัวเดินจากหลังคาลงห้องระบบ',dEn:'Anti-freeze circuit from roof to plant room'},
-   {rTh:'ปลายทางหลัก',rEn:'DESTINATION',nTh:'ถังน้ำร้อนอัจฉริยะ 300 L',nEn:'Smart Cylinder 300 L',dTh:'จ่ายน้ำ 62°C ไปห้องน้ำและครัว',dEn:'Serves 62°C water to bathrooms & kitchen'},
-   {rTh:'ที่เก็บสำรอง',rEn:'RESERVE',nTh:'ถังกักเก็บใต้ดิน 1,000 L',nEn:'Underground Store 1,000 L',dTh:'รับความร้อนส่วนเกิน เก็บได้ 72 ชั่วโมง',dEn:'Takes surplus, holds it for 72 hours'}],
-  cnTh:['85°C','62°C','ส่วนเกิน'],cnEn:['85°C','62°C','surplus'],
-  oTh:'<b>ผลลัพธ์:</b> ลดค่าไฟส่วนทำน้ำร้อนลง 70% มีน้ำอุ่นใช้ทั้งบ้านแม้ฝนตกติดกัน 3 วัน โดยไม่ต้องเปิดฮีตเตอร์ไฟฟ้าสำรอง',
-  oEn:'<b>Outcome:</b> 70% less water-heating electricity and hot water through three straight rainy days without touching the backup element'},
-
- {layer:'climate',c:'var(--climate)',bdg:'③ CLIMATE',
-  th:'เส้นทางควบคุมอุณหภูมิ — จากเซนเซอร์ในห้อง กลับมาเป็นคำสั่ง',
-  en:'Climate path — from room sensors back to commands',
-  steps:[
-   {rTh:'จุดกำเนิด',rEn:'SOURCE',nTh:'เซนเซอร์ 5 โซน (อุณหภูมิ/ความชื้น/คน)',nEn:'5-zone sensors (temp/RH/presence)',dTh:'ติดตั้งในห้องนอน ล็อฟท์ ห้องทำงาน ห้องนั่งเล่น ครัว',dEn:'Bedroom, loft, study, living, kitchen'},
-   {rTh:'ทางผ่าน',rEn:'ROUTE',nTh:'Smart Gateway',nEn:'Smart Gateway',dTh:'เทียบกับตารางเวลาและพยากรณ์อากาศ',dEn:'Cross-checks schedule and forecast'},
-   {rTh:'ปลายทาง',rEn:'DESTINATION',nTh:'วาล์ว/ชุดปรับอากาศรายโซน',nEn:'Per-zone valves & air handlers',dTh:'ปรับเฉพาะโซนที่มีคนอยู่จริง',dEn:'Conditions only the occupied zones'}],
-  cnTh:['ค่าที่วัดได้','setpoint'],cnEn:['readings','setpoint'],
-  oTh:'<b>ผลลัพธ์:</b> อุณหภูมิแม่นยำ ±0.3°C ทุกโซน และตัดการใช้พลังงานในห้องที่ว่างอัตโนมัติ ลดภาระปรับอากาศราว 25–30%',
-  oEn:'<b>Outcome:</b> ±0.3°C accuracy per zone and automatic shut-off in empty rooms — roughly 25–30% less conditioning load'},
-
- {layer:'data',c:'var(--data)',bdg:'④ DATA',
-  th:'เส้นทางข้อมูล — จากเซนเซอร์ทุกตัว จบที่มือคุณ แล้ววนกลับมาเป็นคำสั่ง',
-  en:'Data path — every sensor to your hand, and back as commands',
-  steps:[
-   {rTh:'จุดกำเนิด',rEn:'SOURCE',nTh:'เซนเซอร์ทั้งระบบ (โซลาร์/ลม/เทอร์โมสตัท/ถังน้ำ)',nEn:'All sensors (solar/wind/thermostats/tank)',dTh:'อ่านค่าทุก 1 วินาที รวม 32 ช่องสัญญาณ',dEn:'32 channels sampled every second'},
-   {rTh:'รวบรวม',rEn:'COLLECT',nTh:'Data-logging Unit',nEn:'Data-logging Unit',dTh:'รวมข้อมูลผ่าน Modbus/RS485 เก็บสำรอง 90 วัน',dEn:'Modbus/RS485 aggregation, 90-day buffer'},
-   {rTh:'ประมวลผล',rEn:'PROCESS',nTh:'Smart Gateway + พยากรณ์อากาศ',nEn:'Smart Gateway + weather API',dTh:'ตัดสินใจล่วงหน้าและสั่งงานอุปกรณ์',dEn:'Predictive decisions and device commands'},
-   {rTh:'ปลายทาง',rEn:'DESTINATION',nTh:'Solar Home App (คลาวด์)',nEn:'Solar Home App (cloud)',dTh:'ดูสถานะและสั่งงานกลับได้จากทุกที่',dEn:'Monitor and command back from anywhere'}],
-  cnTh:['RS485','ชุดข้อมูล','คลาวด์'],cnEn:['RS485','dataset','cloud'],
-  oTh:'<b>ผลลัพธ์:</b> เห็นทุกหน่วยไฟแบบเรียลไทม์ ระบบตัดสินใจแทนล่วงหน้า 7 วัน และคุณสั่งงานทั้งบ้านย้อนกลับได้ภายใน 2 วินาที',
-  oEn:'<b>Outcome:</b> Real-time visibility of every kWh, 7-day predictive decisions, and full two-way control in under 2 seconds'}
-];
-
-function drawChains(){
-  document.getElementById('chains').innerHTML=CHAINS.map((c,ci)=>{
-    const cn = LANG==='th'?c.cnTh:c.cnEn;
-    let inner='';
-    c.steps.forEach((s,i)=>{
-      inner+=`<div class="step"><div class="r" style="color:${c.c}">${LANG==='th'?s.rTh:s.rEn}</div>
-        <div class="n">${LANG==='th'?s.nTh:s.nEn}</div><div class="d">${LANG==='th'?s.dTh:s.dEn}</div></div>`;
-      if(i<c.steps.length-1) inner+=`<div class="arw" style="color:${c.c}">→<small>${cn[i]||''}</small></div>`;
-    });
-    return `<div class="chain" data-l="${c.layer}" data-i="${ci}">
-      <div class="ch"><span class="bdg" style="background:${c.c}22;color:${c.c}">${c.bdg}</span><b>${LANG==='th'?c.th:c.en}</b></div>
-      <div class="steps">${inner}</div>
-      <div class="outcome">✦ <div>${LANG==='th'?c.oTh:c.oEn}</div></div></div>`;
-  }).join('');
-  document.querySelectorAll('.chain').forEach(el=>{
-    el.addEventListener('mouseenter',()=>isolate(el.dataset.l));
-    el.addEventListener('mouseleave',()=>isolate(null));
-    el.addEventListener('click',()=>{isolate(el.dataset.l);go('#bpsec')});
-  });
-}
-function isolate(l){
-  ['power','thermal','climate','data'].forEach(k=>{
-    const g=document.getElementById('L-'+k);
-    const ly=document.querySelector(`.ly[data-layer="${k}"]`);
-    if(!ly.classList.contains('on')){g.style.opacity='.06';return;}
-    g.style.transition='.3s'; g.style.opacity = (!l||l===k)?'1':'.12';
-  });
-  document.querySelectorAll('.chain').forEach(c=>c.classList.toggle('dimmed', l && c.dataset.l!==l));
-}
-
-/* ========== INSPECTOR ========== */
+/* ================= INSPECTOR ================= */
 let LANG='th';
 document.querySelectorAll('.hs').forEach(h=>h.addEventListener('click',()=>{
   document.querySelectorAll('.hs').forEach(x=>x.classList.remove('active'));
   h.classList.add('active'); showEq(h.dataset.id);
 }));
+
 function showEq(id){
-  const e=EQ[id]; if(!e)return;
-  const t=LANG==='th'?e.th:e.en, io=LANG==='th'?e.ioTh:e.ioEn;
-  const L=LANG==='th'?['รับเข้า','ส่งออก','ข้อมูล']:['INPUT','OUTPUT','DATA'];
+  const e=EQ[id]; if(!e) return;
+  const t = LANG==='th'?e.th:e.en;
   document.getElementById('emptyState').style.display='none';
   const b=document.getElementById('inspBody'); b.style.display='block';
-  b.innerHTML=`<div class="ic" style="background:${e.c}22;color:${e.c}">${e.ic}</div>
+  b.innerHTML=`
+    <div class="ic" style="background:${e.c}22;color:${e.c}">${e.ic}</div>
     <div class="cat" style="color:${e.c}">${e.cat}</div>
-    <h3>${t[0]}</h3><p class="desc">${t[1]}</p>
+    <h3>${t[0]}</h3>
+    <p class="desc">${t[1]}</p>
     ${e.specs.map(s=>`<div class="spec"><span>${s[0]}</span><span>${s[1]}</span></div>`).join('')}
-    <div class="io" style="border-color:${e.c}44">
-      <div><b style="color:${e.c}">${L[0]}</b><span>${io[0]}</span></div>
-      <div><b style="color:${e.c}">${L[1]}</b><span>${io[1]}</span></div>
-      <div><b style="color:${e.c}">${L[2]}</b><span>${io[2]}</span></div>
-    </div>
     <div class="bene">✦ ${LANG==='th'?e.bth:e.ben}</div>`;
   if(window.innerWidth<980) b.scrollIntoView({behavior:'smooth',block:'center'});
 }
 
-/* ========== LAYERS ========== */
+/* ================= LAYERS ================= */
 document.querySelectorAll('.ly').forEach(l=>l.addEventListener('click',()=>{
   const on=l.classList.toggle('on'); l.classList.toggle('off',!on);
   const g=document.getElementById('L-'+l.dataset.layer);
   g.style.transition='.35s'; g.style.opacity=on?'1':'0.06';
 }));
 
-/* ========== SIMULATION ========== */
-const SCEN={
- sunny:{s:11.8,sm:13.2,w:.3,b:94,t:68,th:'พยากรณ์แจ้งว่าแดดแรงต่อเนื่อง 6 ชั่วโมง ระบบเร่งต้มน้ำร้อนเต็มถังก่อนบ่าย แล้วเก็บส่วนเกินลงแบตเตอรี่และถังใต้ดิน',en:'Forecast shows 6 hours of strong sun — the system front-loads water heating, then banks surplus into battery and store.'},
- cloudy:{s:3.1,sm:13.2,w:.9,b:71,t:54,th:'ตรวจพบเมฆหนา ระบบดึงพลังงานที่สำรองไว้เมื่อวานจากถังใต้ดินมาใช้ และเลื่อนงานที่กินพลังงานสูงไปช่วงแดดกลับมา',en:'Heavy cloud detected — reserves from the underground store are drawn on and high-load tasks deferred.'},
- windy:{s:2.4,sm:13.2,w:1.5,b:88,t:61,th:'ลมแรงทำให้กังหันเดินเต็มกำลัง ชดเชยแสงแดดที่หายไปเกือบทั้งหมด ระบบใช้จังหวะนี้ชาร์จแบตเตอรี่กลับขึ้นมาเต็ม',en:'Strong winds push the turbine to rated output, offsetting lost solar and topping the battery back up.'},
- night:{s:0,sm:13.2,w:1.1,b:63,t:58,th:'กลางคืนไม่มีแดด แต่กังหันลมและแบตเตอรี่ยังจ่ายไฟทั้งบ้านได้ตามปกติ ระบบลดอุณหภูมิโซนที่ไม่มีคนอยู่อัตโนมัติ',en:'No sun, but wind and battery carry the house while unoccupied zones are set back automatically.'}};
-function setScen(k){const d=SCEN[k];
-  anim('vS',d.s,1);setBar('bS',d.s/d.sm*100);pcS.textContent=Math.round(d.s/d.sm*100)+'%';
-  anim('vW',d.w,1);setBar('bW',d.w/1.5*100);pcW.textContent=Math.round(d.w/1.5*100)+'%';
-  anim('vB',d.b,0);setBar('bB',d.b);pcB.textContent=d.b>70?'healthy':'reserve';
-  anim('vT',d.t,0);setBar('bT',d.t/80*100);pcT.textContent=d.t>60?'ready':'heating';
-  document.getElementById('aiMsg').textContent=LANG==='th'?d.th:d.en;
+/* ================= SIMULATION ================= */
+function setScen(k){
+  const d=SCEN[k];
+  anim('vS',d.s,1); setBar('bS',d.s/d.sm*100); document.getElementById('pcS').textContent=Math.round(d.s/d.sm*100)+'%';
+  anim('vW',d.w,1); setBar('bW',d.w/1.5*100); document.getElementById('pcW').textContent=Math.round(d.w/1.5*100)+'%';
+  anim('vB',d.b,0); setBar('bB',d.b); document.getElementById('pcB').textContent=d.b>70?'healthy':'reserve';
+  anim('vT',d.t,0); setBar('bT',d.t/80*100); document.getElementById('pcT').textContent=d.t>60?'ready':'heating';
+  document.getElementById('aiMsg').textContent = LANG==='th'?d.th:d.en;
   const net=(d.s+d.w-2.1).toFixed(1);
-  appNet.textContent=(net>=0?'+':'')+net+' kW';appNet.style.color=net>=0?'var(--ok)':'var(--thermal)';
-  const sp=d.s>8?'.7s':d.s>3?'1.4s':'2.6s';
-  document.querySelectorAll('#L-power .flow').forEach(p=>p.style.animationDuration=sp);}
+  document.getElementById('appNet').textContent=(net>=0?'+':'')+net+' kW';
+  document.getElementById('appNet').style.color = net>=0?'var(--ok)':'var(--thermal)';
+  const sp = d.s>8?'0.7s':d.s>3?'1.4s':'2.6s';
+  document.querySelectorAll('#L-power .flow').forEach(p=>p.style.animationDuration=sp);
+}
 function setBar(id,p){document.getElementById(id).style.width=Math.min(100,Math.max(2,p))+'%';}
-function anim(id,to,dec){const el=document.getElementById(id);let f=parseFloat(el.textContent)||0,st=null;
-  (function r(ts){if(!st)st=ts;const p=Math.min((ts-st)/650,1);
-   el.textContent=(f+(to-f)*(1-Math.pow(1-p,3))).toFixed(dec);if(p<1)requestAnimationFrame(r)})
-  ;requestAnimationFrame(function r(ts){if(!st)st=ts;const p=Math.min((ts-st)/650,1);
-   el.textContent=(f+(to-f)*(1-Math.pow(1-p,3))).toFixed(dec);if(p<1)requestAnimationFrame(r)});}
+function anim(id,to,dec){
+  const el=document.getElementById(id); let from=parseFloat(el.textContent)||0,st=null;
+  function f(ts){ if(!st)st=ts; const p=Math.min((ts-st)/650,1);
+    el.textContent=(from+(to-from)*(1-Math.pow(1-p,3))).toFixed(dec);
+    if(p<1)requestAnimationFrame(f);} requestAnimationFrame(f);
+}
 document.querySelectorAll('#scen .sb').forEach(b=>b.addEventListener('click',()=>{
-  document.querySelectorAll('#scen .sb').forEach(x=>x.classList.remove('on'));b.classList.add('on');setScen(b.dataset.s);}));
+  document.querySelectorAll('#scen .sb').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on'); setScen(b.dataset.s);
+}));
 
-/* ========== LOGIC BUILDER ========== */
-const IFS={forecast_cloudy:{th:'พยากรณ์พรุ่งนี้ฟ้าปิด',en:'Tomorrow\'s forecast is cloudy'},
- battery_low:{th:'แบตเตอรี่ต่ำกว่า 40%',en:'Battery drops below 40%'},
- water_cold:{th:'น้ำในถังต่ำกว่า 45°C',en:'Tank water falls below 45°C'},
- surplus:{th:'ผลิตไฟเกินความต้องการ',en:'Generation exceeds demand'},
- no_presence:{th:'ไม่มีคนอยู่ในโซนเกิน 30 นาที',en:'Zone empty for over 30 min'}};
-const THENS={preheat:{th:'ต้มน้ำร้อนเก็บไว้ล่วงหน้าเต็มถัง',en:'Pre-heat the cylinder to full'},
- charge:{th:'ชาร์จแบตเตอรี่จากกังหันลมทันที',en:'Charge battery from wind immediately'},
- store:{th:'ส่งพลังงานส่วนเกินลงถังใต้ดิน',en:'Send surplus to the underground store'},
- setback:{th:'ลดอุณหภูมิโซนนั้นลง 3°C',en:'Set that zone back by 3°C'},
- notify:{th:'แจ้งเตือนผ่านแอปทันที',en:'Send an instant app notification'},
- defer:{th:'เลื่อนงานที่กินพลังงานสูงออกไป',en:'Defer all high-load appliances'}};
+/* ================= LOGIC BUILDER ================= */
+const IFS={
+  'forecast_cloudy':{th:'พยากรณ์พรุ่งนี้ฟ้าปิด',en:'Tomorrow\'s forecast is cloudy'},
+  'battery_low':{th:'แบตเตอรี่ต่ำกว่า 40%',en:'Battery drops below 40%'},
+  'water_cold':{th:'น้ำในถังต่ำกว่า 45°C',en:'Tank water falls below 45°C'},
+  'surplus':{th:'ผลิตไฟเกินความต้องการ',en:'Generation exceeds demand'},
+  'no_presence':{th:'ไม่มีคนอยู่ในโซนเกิน 30 นาที',en:'Zone empty for over 30 min'}
+};
+const THENS={
+  'preheat':{th:'ต้มน้ำร้อนเก็บไว้ล่วงหน้าเต็มถัง',en:'Pre-heat the cylinder to full'},
+  'charge':{th:'ชาร์จแบตเตอรี่จากกังหันลมทันที',en:'Charge battery from wind immediately'},
+  'store':{th:'ส่งพลังงานส่วนเกินลงถังใต้ดิน',en:'Send surplus to the underground store'},
+  'setback':{th:'ลดอุณหภูมิโซนนั้นลง 3°C',en:'Set that zone back by 3°C'},
+  'notify':{th:'แจ้งเตือนผ่านแอปทันที',en:'Send an instant app notification'},
+  'defer':{th:'เลื่อนงานที่กินพลังงานสูงออกไป',en:'Defer all high-load appliances'}
+};
 let RL=[['forecast_cloudy','preheat'],['surplus','store'],['no_presence','setback']];
-function drawRules(){document.getElementById('rules').innerHTML=RL.map((r,i)=>`
-  <div class="rule"><b>IF</b>
-   <select onchange="RL[${i}][0]=this.value">${Object.keys(IFS).map(k=>`<option value="${k}" ${k===r[0]?'selected':''}>${IFS[k][LANG]}</option>`).join('')}</select>
-   <b class="then">THEN</b>
-   <select onchange="RL[${i}][1]=this.value">${Object.keys(THENS).map(k=>`<option value="${k}" ${k===r[1]?'selected':''}>${THENS[k][LANG]}</option>`).join('')}</select>
-   <button class="rm" onclick="RL.splice(${i},1);drawRules()">✕</button></div>`).join('');}
-function addRule(){RL.push(['battery_low','charge']);drawRules();}
-function runRules(){const c=document.getElementById('con');c.textContent='';
- const L=['> connecting to weather API… ok','> reading 32 data channels… ok',''];
- RL.forEach((r,i)=>L.push(`[rule ${i+1}] ${IFS[r[0]][LANG]}\n   ↳ ${THENS[r[1]][LANG]}`));
- L.push('',`> ${RL.length} ${LANG==='th'?'กฎถูกติดตั้งบน Smart Gateway เรียบร้อย':'rules deployed to Smart Gateway'}`,
-  `> ${LANG==='th'?'ประมาณการประหยัดเพิ่ม':'estimated extra saving'}: ${(RL.length*2.4).toFixed(1)} kWh/day`);
- let i=0;(function t(){if(i<L.length){c.textContent+=L[i++]+'\n';setTimeout(t,170)}})();}
+function drawRules(){
+  document.getElementById('rules').innerHTML=RL.map((r,i)=>`
+    <div class="rule">
+      <b>IF</b>
+      <select onchange="RL[${i}][0]=this.value">${Object.keys(IFS).map(k=>`<option value="${k}" ${k===r[0]?'selected':''}>${IFS[k][LANG]}</option>`).join('')}</select>
+      <b class="then">THEN</b>
+      <select onchange="RL[${i}][1]=this.value">${Object.keys(THENS).map(k=>`<option value="${k}" ${k===r[1]?'selected':''}>${THENS[k][LANG]}</option>`).join('')}</select>
+      <button class="rm" onclick="RL.splice(${i},1);drawRules()">✕</button>
+    </div>`).join('');
+}
+function addRule(){ RL.push(['battery_low','charge']); drawRules(); }
+function runRules(){
+  const c=document.getElementById('con'); c.textContent='';
+  const lines=['> connecting to weather API… ok','> reading 32 data channels… ok',''];
+  RL.forEach((r,i)=>lines.push(`[rule ${i+1}] ${IFS[r[0]][LANG]}\n   ↳ ${THENS[r[1]][LANG]}`));
+  lines.push('', `> ${RL.length} ${LANG==='th'?'กฎถูกติดตั้งบน Smart Gateway เรียบร้อย':'rules deployed to Smart Gateway'}`,
+    `> ${LANG==='th'?'ประมาณการประหยัดเพิ่ม':'estimated extra saving'}: ${(RL.length*2.4).toFixed(1)} kWh/day`);
+  let i=0; (function type(){ if(i<lines.length){ c.textContent+=lines[i++]+'\n'; setTimeout(type,180);} })();
+}
 drawRules();
 
-/* ========== ROI ========== */
-const TARIFF=4.2,PR=.8,COSTKW=38000,WINDCOST=95000;
+/* ================= ROI ================= */
+const TARIFF=4.20, PR=0.8, COSTKW=38000, WINDCOST=95000;
 function calcROI(){
- const b=+bill.value,a=+area.value,s=+sun.value,w=+wind.value;
- lb1.textContent=b.toLocaleString()+' ฿';lb2.textContent=a+' m²';lb3.textContent=s.toFixed(1)+' h';
- lb4.textContent=w?(LANG==='th'?'ใส่':'Yes'):(LANG==='th'?'ไม่ใส่':'No');
- const kwp=Math.min(a/5.2,20),sk=kwp*s*365*PR,wk=w?1.5*365*4.5*.35:0;
- const use=b*12/TARIFF,off=Math.min(sk+wk,use*.92),ws=b*12*.14*.7;
- const save=off*TARIFF+ws,capex=kwp*COSTKW+(w?WINDCOST:0)+145000,pay=capex/save;
- r1.textContent=kwp.toFixed(1);r2.textContent=Math.round(save).toLocaleString()+' ฿';
- r3.textContent=pay.toFixed(1)+(LANG==='th'?' ปี':' yr');
- r4.textContent=Math.round((save*25-capex)/1000).toLocaleString()+'k ฿';
- r5.textContent=(Math.round((sk+wk)*.4999/100)/10).toFixed(1)+' t';
- r6.textContent=Math.min(99,Math.round(save/(b*12)*100))+' %';
- roiNote.innerHTML=LANG==='th'
-  ?`✦ ระบบขนาด <b>${kwp.toFixed(1)} kWp</b> คืนทุนใน <b>${pay.toFixed(1)} ปี</b> หลังจากนั้นได้พลังงานเกือบฟรีอีก <b>${Math.max(0,25-pay).toFixed(0)} ปี</b> ตลอดอายุรับประกันแผง`
-  :`✦ A <b>${kwp.toFixed(1)} kWp</b> system pays back in <b>${pay.toFixed(1)} years</b>, leaving about <b>${Math.max(0,25-pay).toFixed(0)} more years</b> of near-free energy.`;}
-[bill,area,sun,wind].forEach(e=>e.addEventListener('input',calcROI));
+  const bill=+bill_.value, area=+area_.value, sun=+sun_.value, wind=+wind_.value;
+  lb1.textContent=bill.toLocaleString()+' ฿'; lb2.textContent=area+' m²';
+  lb3.textContent=sun.toFixed(1)+' h';
+  lb4.textContent= wind? (LANG==='th'?'ใส่':'Yes') : (LANG==='th'?'ไม่ใส่':'No');
+  const kwp=Math.min(area/5.2, 20);
+  const solarKwh=kwp*sun*365*PR;
+  const windKwh=wind?1.5*365*4.5*0.35:0;
+  const annualUse=bill*12/TARIFF;
+  const offsetKwh=Math.min(solarKwh+windKwh, annualUse*0.92);
+  const waterSave=bill*12*0.14*0.70;
+  const save=offsetKwh*TARIFF+waterSave;
+  const capex=kwp*COSTKW+(wind?WINDCOST:0)+145000;
+  const pay=capex/save;
+  r1.textContent=kwp.toFixed(1);
+  r2.textContent=Math.round(save).toLocaleString()+' ฿';
+  r3.textContent=pay.toFixed(1)+(LANG==='th'?' ปี':' yr');
+  r4.textContent=Math.round((save*25-capex)/1000).toLocaleString()+'k ฿';
+  r5.textContent=Math.round((solarKwh+windKwh)*0.4999/1000*10)/10+' t';
+  r6.textContent=Math.min(99,Math.round(save/(bill*12)*100))+' %';
+  document.getElementById('roiNote').innerHTML = LANG==='th'
+    ? `✦ ระบบขนาด <b>${kwp.toFixed(1)} kWp</b> คืนทุนใน <b>${pay.toFixed(1)} ปี</b> และหลังจากนั้นคุณจะได้พลังงานเกือบฟรีอีก <b>${Math.max(0,25-pay).toFixed(0)} ปี</b> ตลอดอายุรับประกันแผง`
+    : `✦ A <b>${kwp.toFixed(1)} kWp</b> system pays back in <b>${pay.toFixed(1)} years</b>, leaving roughly <b>${Math.max(0,25-pay).toFixed(0)} more years</b> of near-free energy within the panel warranty.`;
+}
+const bill_=document.getElementById('bill'),area_=document.getElementById('area'),
+      sun_=document.getElementById('sun'),wind_=document.getElementById('wind');
+[bill_,area_,sun_,wind_].forEach(e=>e.addEventListener('input',calcROI));
 
-/* ========== LANGUAGE ========== */
-function setLang(l){LANG=l;
- lth.classList.toggle('on',l==='th');len.classList.toggle('on',l==='en');
- document.querySelectorAll('[data-en]').forEach(el=>{if(!el.dataset.th)el.dataset.th=el.innerHTML;
-  el.innerHTML=l==='en'?el.dataset.en:el.dataset.th;});
- document.documentElement.lang=l;drawRules();calcROI();drawChains();
- setScen(document.querySelector('#scen .sb.on').dataset.s);
- const a=document.querySelector('.hs.active');if(a)showEq(a.dataset.id);}
-lth.onclick=()=>setLang('th');len.onclick=()=>setLang('en');
+/* ================= LANGUAGE ================= */
+function setLang(l){
+  LANG=l;
+  document.getElementById('lth').classList.toggle('on',l==='th');
+  document.getElementById('len').classList.toggle('on',l==='en');
+  document.querySelectorAll('[data-en]').forEach(el=>{
+    if(!el.dataset.th) el.dataset.th=el.innerHTML;
+    el.innerHTML = l==='en'? el.dataset.en : el.dataset.th;
+  });
+  document.documentElement.lang=l;
+  drawRules(); calcROI();
+  setScen(document.querySelector('#scen .sb.on').dataset.s);
+  const a=document.querySelector('.hs.active'); if(a) showEq(a.dataset.id);
+}
+document.getElementById('lth').onclick=()=>setLang('th');
+document.getElementById('len').onclick=()=>setLang('en');
 
-/* ========== TOUR ========== */
+/* ================= GUIDED TOUR ================= */
 const TOUR=[
- ['solar','#bpsec',{th:'ทุกอย่างเริ่มที่หลังคา — แผงโซลาร์ 13.2 kWp คือ “จุดกำเนิด” ของเส้นสีเหลือง',en:'It starts on the roof — the 13.2 kWp array is the origin of every yellow line.'}],
- ['inverter','#bpsec',{th:'เส้นสีเหลืองทุกเส้นวิ่งมารวมที่ไฮบริดอินเวอร์เตอร์ แล้วกระจายเป็น AC 230 V ไปทั้งบ้าน',en:'All yellow lines converge at the hybrid inverter, then fan out as AC 230 V.'}],
- ['collector','#bpsec',{th:'เส้นสีแดงคือความร้อนจากแดด วิ่งผ่าน Glycol 85°C ไปจบที่ถังน้ำร้อน 300 ลิตร',en:'The red line carries solar heat through an 85°C glycol loop into the 300 L cylinder.'}],
- ['thermo','#bpsec',{th:'เส้นสีฟ้าวิ่งสองทาง — เซนเซอร์ส่งค่าขึ้นไป แล้ว Gateway ส่ง setpoint กลับลงมา',en:'Cyan lines run both ways — sensors up, setpoints back down from the gateway.'}],
- ['gateway','#bpsec',{th:'เส้นสีม่วงจบที่ Smart Gateway ซึ่งรวมข้อมูลกับพยากรณ์อากาศแล้วตัดสินใจแทนคุณ',en:'Purple lines end at the Smart Gateway, which fuses data with the forecast and decides for you.'}],
- [null,'#flows',{th:'ทั้ง 4 เส้นทางสรุปไว้ตรงนี้ — ต้นทาง ทางผ่าน ปลายทาง และผลลัพธ์ที่วัดได้',en:'All four paths summarised here — source, route, destination and measurable outcome.'}],
- [null,'#roi',{th:'สุดท้ายคือสิ่งที่ลูกค้าอยากรู้ที่สุด — ประหยัดเท่าไร คืนทุนกี่ปี ลองเลื่อนดูได้เลย',en:'And finally — how much you save and how fast it pays back.'}]];
+  ['solar','#bpsec',{th:'ทุกอย่างเริ่มที่หลังคา — แผงโซลาร์ 13.2 kWp ผลิตไฟให้บ้านตลอดกลางวัน',en:'It all starts on the roof — a 13.2 kWp array powering the house all day.'}],
+  ['wind','#bpsec',{th:'แต่แดดไม่ได้มีทุกวัน กังหันลมจึงเข้ามาเติมเต็มช่วงกลางคืนและวันฟ้าปิด',en:'But the sun isn\'t always there — the turbine covers nights and cloudy days.'}],
+  ['collector','#bpsec',{th:'เส้นสีแดงคือความร้อนจากแสงแดดที่ส่งตรงไปต้มน้ำ ลดค่าไฟส่วนนี้ได้ถึง 70%',en:'The red lines carry solar heat straight to your water — up to 70% less electricity.'}],
+  ['thermo','#bpsec',{th:'เส้นสีฟ้าคือการคุมอุณหภูมิแยกรายห้อง ห้องที่ไม่มีคนอยู่ก็ไม่ต้องจ่ายค่าพลังงาน',en:'The cyan lines are per-room climate control — empty rooms cost you nothing.'}],
+  ['gateway','#bpsec',{th:'Smart Gateway คือสมองของบ้าน ดึงพยากรณ์อากาศมาตัดสินใจล่วงหน้าแทนคุณ',en:'The Smart Gateway is the brain — it reads the forecast and decides ahead of you.'}],
+  [null,'#roi',{th:'สุดท้ายคือสิ่งที่ลูกค้าอยากรู้ที่สุด — ประหยัดเท่าไร และคืนทุนกี่ปี ลองเลื่อนดูได้เลย',en:'And finally, the question that matters — how much you save and how fast it pays back.'}]
+];
 let ti=-1;
 function startTour(){ti=-1;document.getElementById('tour').classList.add('show');nextTour();}
-function nextTour(){ti++;if(ti>=TOUR.length){endTour();return;}
- const[id,sec,txt]=TOUR[ti];
- tourN.textContent=(ti+1)+' / '+TOUR.length;tourT.textContent=txt[LANG];
- document.querySelector(sec).scrollIntoView({behavior:'smooth',block:'center'});
- if(id){document.querySelectorAll('.hs').forEach(x=>x.classList.remove('active'));
-  const h=document.querySelector(`.hs[data-id="${id}"]`);h.classList.add('active');showEq(id);}}
+function nextTour(){
+  ti++;
+  if(ti>=TOUR.length){endTour();return;}
+  const [id,sec,txt]=TOUR[ti];
+  document.getElementById('tourN').textContent=(ti+1)+' / '+TOUR.length;
+  document.getElementById('tourT').textContent=txt[LANG];
+  document.querySelector(sec).scrollIntoView({behavior:'smooth',block:'center'});
+  if(id){ document.querySelectorAll('.hs').forEach(x=>x.classList.remove('active'));
+    const h=document.querySelector(`.hs[data-id="${id}"]`); h.classList.add('active'); showEq(id); }
+}
 function endTour(){document.getElementById('tour').classList.remove('show');}
-function go(s){document.querySelector(s).scrollIntoView({behavior:'smooth'});}
 
-/* ========== REVEAL ========== */
-const io2=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.1});
-document.querySelectorAll('.reveal').forEach(e=>io2.observe(e));
-document.querySelectorAll('[data-count]').forEach(el=>{const to=+el.dataset.count;let st=null;
- const run=ts=>{if(!st)st=ts;const p=Math.min((ts-st)/1400,1);
-  el.textContent=Math.round(to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(run)};
- setTimeout(()=>requestAnimationFrame(run),320);});
+/* ================= REVEAL + COUNTERS ================= */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(e=>io.observe(e));
+document.querySelectorAll('[data-count]').forEach(el=>{
+  const to=+el.dataset.count; let st=null;
+  const run=ts=>{if(!st)st=ts;const p=Math.min((ts-st)/1400,1);
+    el.textContent=Math.round(to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(run)};
+  setTimeout(()=>requestAnimationFrame(run),320);
+});
 
-drawChains();setScen('sunny');calcROI();
+setScen('sunny'); calcROI();
 </script>
 </body>
 </html>
