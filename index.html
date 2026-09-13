@@ -167,29 +167,25 @@ td.good{color:var(--ok);font-weight:600}
 td.bad{color:#ff8a8a}
 footer{border-top:1px solid var(--line);padding:52px 0;text-align:center;color:var(--dim);font-size:14px}
 
-/* ---------- PDF MODAL ---------- */
-.ov{position:fixed;inset:0;z-index:200;background:rgba(3,6,12,.9);backdrop-filter:blur(10px);
-  display:none;align-items:center;justify-content:center;padding:22px}
-.ov.show{display:flex;animation:fi .25s}
-@keyframes fi{from{opacity:0}}
-.modal{width:100%;max-width:1080px;height:min(88vh,880px);background:#0b1222;border:1px solid var(--line);
-  border-radius:20px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.7)}
-.mhead{display:flex;align-items:center;gap:14px;padding:16px 20px;border-bottom:1px solid var(--line);flex-wrap:wrap}
-.mhead h3{font-size:17px;flex:1;min-width:150px}
-.mbody{flex:1;position:relative;background:#070b14}
-.mbody iframe{width:100%;height:100%;border:0;display:block}
-.drop{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:32px}
-.drop .box{border:2px dashed rgba(168,85,247,.4);border-radius:20px;padding:44px 34px;max-width:560px;
-  background:rgba(168,85,247,.05);transition:.25s}
-.drop .box.hot{border-color:var(--data);background:rgba(168,85,247,.14)}
-.drop .ic{font-size:46px;margin-bottom:14px}
-.drop h4{font-size:19px;margin-bottom:8px}
-.drop p{color:var(--dim);font-size:14px;line-height:1.8;margin-bottom:20px}
-.urlrow{display:flex;gap:9px;margin-top:18px;flex-wrap:wrap;justify-content:center}
-.urlrow input{flex:1;min-width:220px;font-size:13px;font-family:'JetBrains Mono'}
-.hint{font-size:12px;color:var(--dim);margin-top:14px;line-height:1.7}
-.fab{position:fixed;right:22px;bottom:22px;z-index:70;display:flex;flex-direction:column;gap:10px}
-.fab button{border-radius:16px;padding:14px 20px;box-shadow:0 14px 40px rgba(0,0,0,.5)}
+<div class="fab"><button class="btn btn-v" onclick="openPdf()" title="Presentation">📑</button></div>
+  
+<!-- ============ PDF MODAL (โชว์ PDF ทันที ไม่มีหน้าอัปโหลดบัง) ============ -->
+<div class="ov" id="pdfOv">
+  <div class="modal">
+    <div class="mhead">
+      <span style="font-size:20px">📑</span>
+      <h3 id="pdfTitle" data-en="Presentation — The Smart Solar Blueprint">พรีเซนเทชัน — The Smart Solar Blueprint</h3>
+      
+      <!-- ปุ่มเปิดแท็บใหม่ (เปลี่ยนชื่อไฟล์ตามที่คุณใช้อยู่ได้เลยครับ) -->
+      <button class="btn btn-g" onclick="window.open('The_Smart_Solar_Blueprint.pdf', '_blank')" data-en="Open in new tab">เปิดแท็บใหม่</button>
+      <button class="btn btn-p" onclick="closePdf()">✕</button>
+    </div>
+    <div class="mbody" id="pdfBody" style="padding:0; overflow:hidden;">
+      <!-- กำหนด iframe ให้โชว์เต็มพื้นที่ และชี้ไปยังไฟล์ PDF ทันที -->
+      <iframe id="pdfFrame" src="The_Smart_Solar_Blueprint.pdf#view=FitH" style="width:100%; height:100%; min-height:75vh; border:none; display:block;"></iframe>
+    </div>
+  </div>
+</div>
 
 #tour{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(150%);z-index:80;
   background:rgba(12,19,34,.96);backdrop-filter:blur(16px);border:1px solid rgba(255,176,32,.35);
