@@ -167,20 +167,21 @@ td.good{color:var(--ok);font-weight:600}
 td.bad{color:#ff8a8a}
 footer{border-top:1px solid var(--line);padding:52px 0;text-align:center;color:var(--dim);font-size:14px}
 
-<div class="fab"><button class="btn btn-v" onclick="openPdf()" title="Presentation">📑</button></div>
+<!-- ปุ่มกดลอยมุมขวาล่าง -->
+<div class="fab"><button class="btn btn-v" onclick="openBmtaPdf()" title="Presentation">📑</button></div>
 
-<!-- ============ PDF MODAL (โชว์ PDF ทันที ไม่มีหน้าอัปโหลดบัง) ============ -->
-<div class="ov" id="pdfOv">
+<!-- ============ PDF MODAL ============ -->
+<div class="ov" id="pdfOv" style="display:none; opacity:0; pointer-events:none;">
   <div class="modal">
     <div class="mhead">
       <span style="font-size:20px">📑</span>
-      <h3 id="pdfTitle" data-en="Presentation — The Smart Solar Blueprint">พรีเซนเทชัน — The Smart Solar Blueprint</h3>
-      <button class="btn btn-g" id="pdfNew" onclick="pdfOpenTab()" data-en="Open in new tab">เปิดแท็บใหม่</button>
-      <button class="btn btn-p" onclick="closePdf()">✕</button>
+      <h3>พรีเซนเทชัน — The Smart Solar Blueprint</h3>
+      <button class="btn btn-g" onclick="openBmtaPdfTab()">เปิดแท็บใหม่</button>
+      <button class="btn btn-p" onclick="closeBmtaPdf()">✕</button>
     </div>
-    <div class="mbody" id="pdfBody" style="padding:0; overflow:hidden;">
-      <!-- กำหนดไฟล์ PDF ที่ต้องการให้โชว์ตรงนี้ -->
-      <iframe id="pdfFrame" src="The_Smart_Solar_Blueprint.pdf#view=FitH" style="width:100%; height:100%; min-height:75vh; border:none; display:block;"></iframe>
+    <div class="mbody" id="pdfBody">
+      <!-- วางรหัสไฟล์ Google Drive ตรงนี้ -->
+      <iframe id="pdfFrame" src="https://drive.google.com/file/d/1lxk89E2N7Cm5kFxCphGqcuNHhDQ1HDsQ "Preview" style="width:100%; height:100%; border:none; display:block;"></iframe>
     </div>
   </div>
 </div>
