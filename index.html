@@ -167,25 +167,30 @@ td.good{color:var(--ok);font-weight:600}
 td.bad{color:#ff8a8a}
 footer{border-top:1px solid var(--line);padding:52px 0;text-align:center;color:var(--dim);font-size:14px}
 
-<!-- ปุ่มกดลอยมุมขวาล่าง -->
-<div class="fab"><button class="btn btn-v" onclick="openBmtaPdf()" title="Presentation">📑</button></div>
+/* ---------- PDF MODAL ---------- */
+.ov{position:fixed;inset:0;z-index:200;background:rgba(3,6,12,.9);backdrop-filter:blur(10px);
+  display:none;align-items:center;justify-content:center;padding:22px}
+.ov.show{display:flex;animation:fi .25s}
+@keyframes fi{from{opacity:0}}
+.modal{width:100%;max-width:1080px;height:min(88vh,880px);background:#0b1222;border:1px solid var(--line);
+  border-radius:20px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.7)}
+.mhead{display:flex;align-items:center;gap:14px;padding:16px 20px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.mhead h3{font-size:17px;flex:1;min-width:150px}
+.mbody{flex:1;position:relative;background:#070b14}
+.mbody iframe{width:100%;height:100%;border:0;display:block}
+.drop{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:32px}
+.drop .box{border:2px dashed rgba(168,85,247,.4);border-radius:20px;padding:44px 34px;max-width:560px;
+  background:rgba(168,85,247,.05);transition:.25s}
+.drop .box.hot{border-color:var(--data);background:rgba(168,85,247,.14)}
+.drop .ic{font-size:46px;margin-bottom:14px}
+.drop h4{font-size:19px;margin-bottom:8px}
+.drop p{color:var(--dim);font-size:14px;line-height:1.8;margin-bottom:20px}
+.urlrow{display:flex;gap:9px;margin-top:18px;flex-wrap:wrap;justify-content:center}
+.urlrow input{flex:1;min-width:220px;font-size:13px;font-family:'JetBrains Mono'}
+.hint{font-size:12px;color:var(--dim);margin-top:14px;line-height:1.7}
+.fab{position:fixed;right:22px;bottom:22px;z-index:70;display:flex;flex-direction:column;gap:10px}
+.fab button{border-radius:16px;padding:14px 20px;box-shadow:0 14px 40px rgba(0,0,0,.5)}
 
-<!-- ============ PDF MODAL ============ -->
-<div class="ov" id="pdfOv" style="display:none; opacity:0; pointer-events:none;">
-  <div class="modal">
-    <div class="mhead">
-      <span style="font-size:20px">📑</span>
-      <h3>พรีเซนเทชัน — The Smart Solar Blueprint</h3>
-      <button class="btn btn-g" onclick="openBmtaPdfTab()">เปิดแท็บใหม่</button>
-      <button class="btn btn-p" onclick="closeBmtaPdf()">✕</button>
-    </div>
-    <div class="mbody" id="pdfBody">
-      <!-- วางรหัสไฟล์ Google Drive ตรงนี้ -->
-      <iframe id="pdfFrame" src="https://drive.google.com/file/d/1lxk89E2N7Cm5kFxCphGqcuNHhDQ1HDsQ "Preview" style="width:100%; height:100%; border:none; display:block;"></iframe>
-    </div>
-  </div>
-</div>
-  
 #tour{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(150%);z-index:80;
   background:rgba(12,19,34,.96);backdrop-filter:blur(16px);border:1px solid rgba(255,176,32,.35);
   border-radius:18px;padding:18px 22px;max-width:660px;width:calc(100% - 44px);
@@ -234,594 +239,160 @@ footer{border-top:1px solid var(--line);padding:52px 0;text-align:center;color:v
 </header>
 
 <!-- ============ BLUEPRINT ============ -->
-
 <section id="bpsec" class="wrap reveal">
-
   <div class="shead">
-
-    <span class="tag">01 / ICON BLUEPRINT</span>
-
-    <h2 data-en="Read it by shape, not by text">อ่านผังด้วย “รูป” ไม่ใช่ด้วยตัวหนังสือ</h2>
-
-    <p data-en="Every node is a pictogram and every line style carries its own meaning — solid for power, twin-line for pipes, dashed for climate, dotted for data.">ทุกจุดเป็นไอคอนบอกหน้าที่ และลายเส้นแต่ละแบบมีความหมายในตัวเอง — ทึบคือไฟฟ้า, ท่อสองชั้นคือของเหลว/ความร้อน, ประคือควบคุมอุณหภูมิ, จุดไข่ปลาคือข้อมูล</p>
-
+    <span class="tag">01 / INTERACTIVE BLUEPRINT</span>
+    <h2 data-en="Every line is labelled: source → route → destination">ทุกเส้นมีป้ายกำกับ: ต้นทาง → ทางผ่าน → ปลายทาง</h2>
+    <p data-en="Toggle the four system layers, then click any numbered node to inspect its equipment, inputs and outputs.">สลับดูทั้ง 4 ระบบ แล้วคลิกจุดที่มีหมายเลขเพื่อดูอุปกรณ์ สิ่งที่รับเข้า และสิ่งที่ส่งออก</p>
   </div>
-
 
   <div class="bpgrid">
-
     <div class="stage">
-
-      <div class="layers" id="layerbar">
-
-        <div class="ly on" data-layer="all"><i style="background:#fff"></i><span data-en="All systems">ทุกระบบ</span></div>
-
-        <div class="ly" data-layer="power"><i style="background:var(--power)"></i><span data-en="⚡ Power">⚡ ไฟฟ้า</span></div>
-
-        <div class="ly" data-layer="thermal"><i style="background:var(--thermal)"></i><span data-en="♨ Heat &amp; water">♨ ความร้อน/น้ำ</span></div>
-
-        <div class="ly" data-layer="climate"><i style="background:var(--climate)"></i><span data-en="🌡 Climate">🌡 อุณหภูมิ</span></div>
-
-        <div class="ly" data-layer="data"><i style="background:var(--data)"></i><span data-en="📶 Data">📶 ข้อมูล</span></div>
-
+      <div class="layers">
+        <div class="ly on" data-layer="power"><i style="background:var(--power)"></i><span data-en="① Power — Solar + Wind">① ไฟฟ้า — โซลาร์ + ลม</span></div>
+        <div class="ly on" data-layer="thermal"><i style="background:var(--thermal)"></i><span data-en="② Heat — Solar hot water">② ความร้อน — น้ำร้อนแสงอาทิตย์</span></div>
+        <div class="ly on" data-layer="climate"><i style="background:var(--climate)"></i><span data-en="③ Climate — Thermostat zones">③ อุณหภูมิ — Thermostat Zone</span></div>
+        <div class="ly on" data-layer="data"><i style="background:var(--data)"></i><span data-en="④ Data — Logger → Gateway → App">④ ข้อมูล — Logger → Gateway → App</span></div>
       </div>
 
-
-      <div class="legend">
-
-        <div class="lgi"><svg width="40" height="10"><line x1="1" y1="5" x2="39" y2="5" stroke="#ffb020" stroke-width="3"/></svg>
-
-          <span data-en="Solid = electrical current">เส้นทึบ = กระแสไฟฟ้า</span></div>
-
-        <div class="lgi"><svg width="40" height="10"><line x1="1" y1="5" x2="39" y2="5" stroke="#ff4d4d" stroke-width="9" opacity=".18"/><line x1="1" y1="5" x2="39" y2="5" stroke="#ff4d4d" stroke-width="2.8"/></svg>
-
-          <span data-en="Twin line = pipe carrying heat">ท่อสองชั้น = ของเหลวนำความร้อน</span></div>
-
-        <div class="lgi"><svg width="40" height="10"><line x1="1" y1="5" x2="39" y2="5" stroke="#22d3ee" stroke-width="2.6" stroke-dasharray="8 7"/></svg>
-
-          <span data-en="Dashed = climate control">เส้นประ = สายควบคุมอุณหภูมิ</span></div>
-
-        <div class="lgi"><svg width="40" height="10"><line x1="1" y1="5" x2="39" y2="5" stroke="#a855f7" stroke-width="2.6" stroke-dasharray="1 6" stroke-linecap="round"/></svg>
-
-          <span data-en="Dotted = data / signal">จุดไข่ปลา = ข้อมูล/สัญญาณ</span></div>
-
-        <div class="lgi"><svg width="40" height="14" viewBox="0 0 40 14"><path d="M1 10 H13 q7 -10 14 0 H39" fill="none" stroke="#8aa0c4" stroke-width="2"/></svg>
-
-          <span data-en="Bump = lines cross, not joined">เส้นโค้งข้าม = ไขว้กัน ไม่ได้ต่อกัน</span></div>
-
-        <div class="lgi"><svg width="40" height="10"><line x1="1" y1="5" x2="39" y2="5" stroke="#8aa0c4" stroke-width="2"/><circle cx="20" cy="5" r="4" fill="#8aa0c4"/></svg>
-
-          <span data-en="Filled dot = real junction">จุดทึบ = จุดเชื่อมต่อจริง</span></div>
-
-      </div>
-
-
-      <svg id="bp" viewBox="0 0 1100 1000" xmlns="http://www.w3.org/2000/svg">
-
+      <svg id="bp" viewBox="0 0 1060 780" xmlns="http://www.w3.org/2000/svg">
         <defs>
-
           <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-
             <stop offset="0%" stop-color="#0f1d38"/><stop offset="100%" stop-color="#070b14"/></linearGradient>
-
-          <radialGradient id="sung"><stop offset="0%" stop-color="#ffd280" stop-opacity=".85"/><stop offset="100%" stop-color="#ffb020" stop-opacity="0"/></radialGradient>
-
-          <marker id="aP" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#ffb020"/></marker>
-
-          <marker id="aPs" markerWidth="8" markerHeight="8" refX="1.5" refY="4" orient="auto"><path d="M8,0 L0,4 L8,8 Z" fill="#ffb020"/></marker>
-
-          <marker id="aT" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#ff4d4d"/></marker>
-
-          <marker id="aC" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#22d3ee"/></marker>
-
-          <marker id="aD" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#a855f7"/></marker>
-
-          <marker id="aDs" markerWidth="8" markerHeight="8" refX="1.5" refY="4" orient="auto"><path d="M8,0 L0,4 L8,8 Z" fill="#a855f7"/></marker>
-
-
-          <!-- ============ PICTOGRAMS ============ -->
-
-          <symbol id="i-solar" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round">
-
-            <path d="M3.2 15.5h17.6L18.4 7.5H5.6z"/><path d="M5.3 11.5h13.4M10.4 7.5l-.9 8M13.6 7.5l.9 8"/><path d="M12 15.5v4M9.4 19.5h5.2"/></g></symbol>
-
-          <symbol id="i-wind" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
-
-            <path d="M12 12.5V21M9.2 21h5.6M12 12.5V3.6M12 12.5l7.4 3.9M12 12.5L4.6 16.4"/>
-
-            <circle cx="12" cy="12.5" r="1.5" fill="currentColor" stroke="none"/></g></symbol>
-
-          <symbol id="i-heat" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-
-            <path d="M3.2 16.5h17.6L18.6 9.5H5.4z"/><path d="M6.6 13h10.8"/>
-
-            <path d="M8.6 6.8c0-1.2 1.6-1.2 1.6-2.4M13.4 6.8c0-1.2 1.6-1.2 1.6-2.4"/>
-
-            <path d="M12 16.5v3.6M9.4 20.1h5.2"/></g></symbol>
-
-          <symbol id="i-inverter" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
-
-            <rect x="2.8" y="4.2" width="18.4" height="15.6" rx="3.2"/>
-
-            <path d="M5.8 13.6c1.3-4 2.6-4 3.9 0"/><path d="M13.4 10.4h4.8M13.4 13.8h4.8M15.4 16.4h2.8"/></g></symbol>
-
-          <symbol id="i-battery" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round">
-
-            <rect x="2.4" y="7" width="16.2" height="10" rx="2.6"/><path d="M21.4 10.6v2.8"/>
-
-            <path d="M5.8 10.4v3.2M9.4 10.4v3.2M13 10.4v3.2"/></g></symbol>
-
-          <symbol id="i-tank" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
-
-            <path d="M6 6.4v11.2a4 4 0 004 4h4a4 4 0 004-4V6.4"/><ellipse cx="12" cy="6" rx="6" ry="2.3"/>
-
-            <path d="M7.6 14.4c1.5-1.2 2.9-1.2 4.4 0s2.9 1.2 4.4 0"/></g></symbol>
-
-          <symbol id="i-store" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
-
-            <path d="M2 6.2h20"/><path d="M4.6 3.4L3.2 6M9.4 3.4L8 6M14.2 3.4L12.8 6M19 3.4L17.6 6"/>
-
-            <path d="M5.4 10v6.4a3.6 3.6 0 003.6 3.6h6a3.6 3.6 0 003.6-3.6V10"/><ellipse cx="12" cy="10" rx="6.6" ry="2.2"/>
-
-            <path d="M7.6 15c1.4-1.1 2.8-1.1 4.2 0s2.8 1.1 4.2 0"/></g></symbol>
-
-          <symbol id="i-thermo" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
-
-            <path d="M13.4 13.6V5.2a2.2 2.2 0 10-4.4 0v8.4a4.2 4.2 0 104.4 0z"/><path d="M11.2 9.4v5.4"/>
-
-            <path d="M17.2 6.6h4M17.2 10.4h3M17.2 14.2h2"/></g></symbol>
-
-          <symbol id="i-logger" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-
-            <rect x="2.8" y="4.2" width="18.4" height="15.6" rx="3.2"/>
-
-            <path d="M6.2 15.2l3.2-4.4 3.2 2.8 4.8-6"/><path d="M6.2 17.8h11.6"/></g></symbol>
-
-          <symbol id="i-gateway" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
-
-            <rect x="2.8" y="12.4" width="18.4" height="7.8" rx="2.6"/>
-
-            <path d="M6.6 16.4h.02M10 16.4h.02"/>
-
-            <path d="M7.6 8.6a6.2 6.2 0 018.8 0"/><path d="M10.2 10.8a2.6 2.6 0 013.6 0"/>
-
-            <circle cx="12" cy="13.4" r=".9" fill="currentColor" stroke="none"/></g></symbol>
-
-          <symbol id="i-app" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-
-            <rect x="6.2" y="2.4" width="11.6" height="19.2" rx="3"/><path d="M10.4 5.2h3.2"/>
-
-            <path d="M8.8 14l2.4-3 2.2 2.4 2.4-4.2"/><path d="M10.6 18.6h2.8"/></g></symbol>
-
-          <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13.4 1.8L4.2 14.2h6.2L9.2 22.2l9.4-12.6h-6z" fill="currentColor"/></symbol>
-
-          <symbol id="i-wave" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
-
-            <path d="M2.6 9c2.1-2.2 4.2-2.2 6.3 0s4.2 2.2 6.3 0 4.2-2.2 6.2 0"/>
-
-            <path d="M2.6 15.4c2.1-2.2 4.2-2.2 6.3 0s4.2 2.2 6.3 0 4.2-2.2 6.2 0"/></g></symbol>
-
-          <symbol id="i-temp" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
-
-            <path d="M14.2 13.4V5a2.3 2.3 0 10-4.6 0v8.4a4.5 4.5 0 104.6 0z"/></g></symbol>
-
-          <symbol id="i-signal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
-
-            <path d="M4.6 9.6a9.6 9.6 0 0114.8 0"/><path d="M8.4 13.4a4.8 4.8 0 017.2 0"/>
-
-            <circle cx="12" cy="17.6" r="1.5" fill="currentColor" stroke="none"/></g></symbol>
-
+          <linearGradient id="pan" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#1b3a6b"/><stop offset="100%" stop-color="#0d1d38"/></linearGradient>
+          <radialGradient id="sung"><stop offset="0%" stop-color="#ffd280" stop-opacity=".9"/><stop offset="100%" stop-color="#ffb020" stop-opacity="0"/></radialGradient>
+          <marker id="aP" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#ffb020"/></marker>
+          <marker id="aT" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#ff4d4d"/></marker>
+          <marker id="aC" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#22d3ee"/></marker>
+          <marker id="aD" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#a855f7"/></marker>
         </defs>
 
+        <rect width="1060" height="780" fill="url(#sky)"/>
+        <circle class="sun" cx="120" cy="86" r="74" fill="url(#sung)"/>
+        <circle cx="120" cy="86" r="24" fill="#ffcf6b" opacity=".85"/>
+        <text class="stagelbl" x="120" y="150" text-anchor="middle">SOLAR IRRADIANCE</text>
 
-        <rect width="1100" height="1000" fill="url(#sky)"/>
+        <line x1="40" y1="612" x2="1020" y2="612" stroke="#2a3a58" stroke-width="2"/>
+        <rect x="40" y="612" width="980" height="168" fill="#0a1020" opacity=".7"/>
 
-        <circle class="sun" cx="110" cy="96" r="78" fill="url(#sung)"/>
-
-        <circle cx="110" cy="96" r="26" fill="#ffcf6b" opacity=".85"/>
-
-        <text class="band" x="110" y="166" text-anchor="middle">SOLAR IRRADIANCE</text>
-
-
-        <!-- ===== STRUCTURE ===== -->
-
-        <polygon points="150,300 600,158 1050,300" fill="#101b30" stroke="#33507e" stroke-width="2"/>
-
-        <rect x="180" y="300" width="840" height="330" fill="#0c1526" stroke="#33507e" stroke-width="2"/>
-
-        <line x1="180" y1="470" x2="1020" y2="470" stroke="#33507e" stroke-width="2"/>
-
-        <line x1="460" y1="300" x2="460" y2="630" stroke="#233a5e"/>
-
-        <line x1="740" y1="300" x2="740" y2="630" stroke="#233a5e"/>
-
-        <line x1="60" y1="630" x2="1060" y2="630" stroke="#2a3a58" stroke-width="2"/>
-
-        <rect x="180" y="650" width="840" height="222" rx="14" fill="#0a1122" stroke="#233a5e" stroke-width="1.4" stroke-dasharray="6 6"/>
-
-        <text class="band" x="200" y="644">BASEMENT · PLANT ROOM</text>
-
-        <text class="band" x="400" y="994" text-anchor="middle">UNDERGROUND</text>
-
+        <!-- house -->
+        <polygon points="150,272 500,104 850,272" fill="#101b30" stroke="#33507e" stroke-width="2"/>
+        <rect x="190" y="272" width="620" height="340" fill="#0c1526" stroke="#33507e" stroke-width="2"/>
+        <line x1="190" y1="442" x2="810" y2="442" stroke="#33507e" stroke-width="2"/>
+        <line x1="400" y1="272" x2="400" y2="442" stroke="#24395c"/>
+        <line x1="610" y1="272" x2="610" y2="442" stroke="#24395c"/>
+        <line x1="360" y1="442" x2="360" y2="612" stroke="#24395c"/>
+        <line x1="640" y1="442" x2="640" y2="612" stroke="#24395c"/>
 
         <g class="roomlbl">
-
-          <text x="300" y="336">ZONE 01 · BEDROOM</text><text x="566" y="336">ZONE 02 · LOFT</text><text x="830" y="336">ZONE 03 · STUDY</text>
-
-          <text x="300" y="606">ZONE 04 · LIVING</text><text x="566" y="606">HALL</text><text x="830" y="606">ZONE 05 · KITCHEN</text>
-
+          <text x="212" y="300">ZONE 01 · BEDROOM</text>
+          <text x="422" y="300">ZONE 02 · LOFT</text>
+          <text x="632" y="300">ZONE 03 · STUDY</text>
+          <text x="212" y="470">ZONE 04 · LIVING</text>
+          <text x="382" y="470">PLANT ROOM</text>
+          <text x="662" y="470">ZONE 05 · KITCHEN</text>
         </g>
 
+        <!-- PV array -->
+        <g>
+          <polygon points="228,258 356,196 380,210 252,272" fill="url(#pan)" stroke="#4a7fd6" stroke-width="1.8"/>
+          <polygon points="262,242 390,180 414,194 286,256" fill="url(#pan)" stroke="#4a7fd6" stroke-width="1.8"/>
+          <polygon points="296,226 424,164 448,178 320,240" fill="url(#pan)" stroke="#4a7fd6" stroke-width="1.8"/>
+        </g>
+        <!-- thermal collector -->
+        <polygon points="546,160 676,222 652,236 522,174" fill="#3a1420" stroke="#ff4d4d" stroke-width="2"/>
+        <!-- turbine -->
+        <line x1="772" y1="132" x2="772" y2="238" stroke="#5c7aa8" stroke-width="5"/>
+        <g class="blades" stroke="#9ec3f5" stroke-width="4.5" stroke-linecap="round">
+          <line x1="772" y1="132" x2="772" y2="72"/><line x1="772" y1="132" x2="824" y2="162"/><line x1="772" y1="132" x2="720" y2="162"/>
+        </g>
+        <circle cx="772" cy="132" r="7" fill="#ffb020"/>
+        <!-- cloud -->
+        <rect x="930" y="96" width="84" height="70" rx="14" fill="#1a1030" stroke="#a855f7" stroke-width="1.8"/>
+        <text x="972" y="140" text-anchor="middle" font-size="26">☁</text>
+        <text class="stagelbl" x="972" y="184" text-anchor="middle" fill="#a855f7">CLOUD / APP</text>
+        <!-- underground store -->
+        <rect x="440" y="662" width="160" height="72" rx="14" fill="#141f36" stroke="#ff4d4d" stroke-width="1.8" opacity=".9"/>
+        <text class="roomlbl" x="520" y="756" text-anchor="middle">UNDERGROUND THERMAL STORE</text>
 
-        <!-- ===== ① POWER (solid) ===== -->
-
-        <g id="L-power" class="lyg" fill="none" stroke="#ffb020" stroke-linecap="round">
-
-          <g stroke-width="3" opacity=".32">
-
-            <path d="M250 206 V750"/><path d="M920 206 V672"/><path d="M920 672 H250"/>
-
-            <path d="M280 780 H390"/><path d="M220 780 H140 V430 H176"/>
-
+        <!-- ===== LAYER: POWER ===== -->
+        <g id="L-power" fill="none" stroke="#ffb020" stroke-width="3" opacity=".95">
+          <path class="flow" d="M330 220 L330 300 L286 340 L286 486" marker-end="url(#aP)"/>
+          <path class="flow" d="M772 244 L772 320 L700 360 L330 360 L300 380 L300 470" marker-end="url(#aP)"/>
+          <path class="flow" d="M300 512 L300 560 L470 560 L470 596" marker-end="url(#aP)"/>
+          <path class="flow" d="M318 500 L560 500 L700 500" marker-end="url(#aP)" stroke-dasharray="8 10"/>
+          <g class="flowlbl" fill="#ffd98a" stroke="#070b14">
+            <text x="342" y="332">DC 13.2 kWp</text>
+            <text x="520" y="352">AC 1.5 kW · Wind</text>
+            <text x="352" y="552">Charge 15 kWh</text>
+            <text x="560" y="492">AC 230 V → โหลดทั้งบ้าน</text>
           </g>
+        </g>
 
-          <path class="flow" d="M250 206 V748" stroke-width="3" marker-end="url(#aP)"/>
-
-          <path class="flow" d="M920 206 V670" stroke-width="3" marker-end="url(#aP)"/>
-
-          <path class="flow" d="M918 672 H252" stroke-width="3.2"/>
-
-          <path d="M284 780 H386" stroke-width="3" marker-end="url(#aP)" marker-start="url(#aPs)"/>
-
-          <path class="flow" d="M220 780 H140 V430 H174" stroke-width="3" marker-end="url(#aP)"/>
-
-          <circle cx="250" cy="672" r="5" fill="#ffb020" stroke="none"/>
-
-          <g class="bdgc" stroke="#ffb020">
-
-            <circle cx="250" cy="480" r="14"/><circle cx="920" cy="430" r="14"/>
-
-            <circle cx="585" cy="672" r="14"/><circle cx="140" cy="520" r="14"/>
-
+        <!-- ===== LAYER: THERMAL ===== -->
+        <g id="L-thermal" fill="none" stroke="#ff4d4d" stroke-width="3.2">
+          <path d="M596 200 L596 300 L520 348 L520 476" marker-end="url(#aT)"/>
+          <path d="M520 508 L520 580 L520 656" marker-end="url(#aT)"/>
+          <path class="flow" d="M538 492 L700 492 L760 470" marker-end="url(#aT)" stroke-width="2.6"/>
+          <g class="flowlbl" fill="#ffb3b3" stroke="#070b14">
+            <text x="604" y="336">Glycol loop 85°C</text>
+            <text x="536" y="606">Surplus heat → เก็บ 72 ชม.</text>
+            <text x="648" y="464">น้ำร้อน 62°C → ห้องน้ำ/ครัว</text>
           </g>
-
-          <g style="color:#ffb020"><use href="#i-bolt" x="243" y="473" width="14" height="14"/>
-
-            <use href="#i-bolt" x="913" y="423" width="14" height="14"/>
-
-            <use href="#i-bolt" x="578" y="665" width="14" height="14"/>
-
-            <use href="#i-bolt" x="133" y="513" width="14" height="14"/></g>
-
         </g>
 
-        <g id="T-power" class="lbls railtxt" fill="#ffd98a" opacity="0">
-
-          <text x="270" y="486" data-en="DC 13.2 kWp">DC 13.2 kWp</text>
-
-          <text x="940" y="436" data-en="AC 1.5 kW">AC 1.5 kW</text>
-
-          <text x="605" y="678" data-en="POWER RAIL · all sources merge">POWER RAIL · รวมทุกแหล่งจ่าย</text>
-
-          <text x="200" y="422" data-en="AC 230 V → whole house">AC 230 V → โหลดทั้งบ้าน</text>
-
-        </g>
-
-
-        <!-- ===== ② HEAT (twin pipe) ===== -->
-
-        <g id="L-thermal" class="lyg" fill="none" stroke-linecap="round">
-
-          <g stroke="#ff4d4d" stroke-width="9" opacity=".17">
-
-            <path d="M645 148 V664 q16 8 0 16 V698 q16 8 0 16 V748"/>
-
-            <path d="M645 810 V824 H690 V868 H400 V873"/>
-
-            <path d="M675 770 H730 V714 q-16 -8 0 -16 V680 q-16 -8 0 -16 V634"/>
-
+        <!-- ===== LAYER: CLIMATE ===== -->
+        <g id="L-climate" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-dasharray="7 7">
+          <path d="M430 498 L430 386 L262 386" marker-end="url(#aC)"/>
+          <path d="M430 498 L430 386 L492 386 L492 348" marker-end="url(#aC)"/>
+          <path d="M430 498 L430 386 L690 386" marker-end="url(#aC)"/>
+          <path d="M412 506 L262 506" marker-end="url(#aC)"/>
+          <path d="M448 506 L690 506" marker-end="url(#aC)"/>
+          <g class="flowlbl" fill="#8feaf8" stroke="#070b14">
+            <text x="268" y="376">Zone 01/04 setpoint</text>
+            <text x="560" y="376">Zone 02/03/05 setpoint</text>
           </g>
+        </g>
 
-          <g stroke="#ff4d4d" stroke-width="2.8">
-
-            <path class="flow" d="M645 148 V664 q16 8 0 16 V698 q16 8 0 16 V746" marker-end="url(#aT)"/>
-
-            <path class="flow" d="M645 810 V824 H690 V868 H400 V871" marker-end="url(#aT)"/>
-
-            <path class="flow" d="M675 770 H730 V714 q-16 -8 0 -16 V680 q-16 -8 0 -16 V636" marker-end="url(#aT)"/>
-
+        <!-- ===== LAYER: DATA ===== -->
+        <g id="L-data" fill="none" stroke="#a855f7" stroke-width="2.2" stroke-dasharray="4 7">
+          <path d="M330 240 L200 240 L170 420 L358 490" marker-end="url(#aD)"/>
+          <path d="M760 250 L820 420 L400 490" marker-end="url(#aD)"/>
+          <path d="M520 490 L400 492" marker-end="url(#aD)"/>
+          <path d="M390 498 L424 498" marker-end="url(#aD)" stroke-width="3" stroke-dasharray="0"/>
+          <path class="flow" d="M446 492 L880 430 L930 180" marker-end="url(#aD)" stroke-dasharray="8 9"/>
+          <path class="flow" d="M940 200 L900 450 L470 530" marker-end="url(#aD)" stroke-dasharray="8 9" opacity=".7"/>
+          <g class="flowlbl" fill="#d8b4fe" stroke="#070b14">
+            <text x="150" y="450">Modbus/RS485 · 1 s</text>
+            <text x="700" y="422">Sensor bus</text>
+            <text x="700" y="556">Cloud sync ↔ App command</text>
           </g>
-
-          <g class="bdgc" stroke="#ff4d4d">
-
-            <circle cx="645" cy="300" r="14"/><circle cx="690" cy="846" r="14"/><circle cx="730" cy="650" r="14"/>
-
-          </g>
-
-          <g style="color:#ff4d4d"><use href="#i-wave" x="638" y="293" width="14" height="14"/>
-
-            <use href="#i-wave" x="683" y="839" width="14" height="14"/>
-
-            <use href="#i-wave" x="723" y="643" width="14" height="14"/></g>
-
         </g>
 
-        <g id="T-thermal" class="lbls railtxt" fill="#ffb3b3" opacity="0">
-
-          <text x="666" y="306" data-en="Glycol loop 85°C">Glycol loop 85°C</text>
-
-          <text x="712" y="852" data-en="Surplus → 72 h reserve">ส่วนเกิน → เก็บสำรอง 72 ชม.</text>
-
-          <text x="752" y="656" data-en="62°C → kitchen &amp; bath">62°C → ครัว / ห้องน้ำ</text>
-
-        </g>
-
-
-        <!-- ===== ③ CLIMATE (dashed) ===== -->
-
-        <g id="L-climate" class="lyg" fill="none" stroke="#22d3ee" stroke-linecap="round">
-
-          <path d="M340 444 H633 q12 -16 24 0 H900" stroke-width="2.6" stroke-dasharray="8 7"/>
-
-          <path d="M620 420 V444" stroke-width="2.6" stroke-dasharray="8 7"/>
-
-          <path class="flow" d="M975 750 V690 H870 V680 q-16 -8 0 -16 V458" stroke-width="2.6" marker-end="url(#aC)"/>
-
-          <g class="bdgc" stroke="#22d3ee">
-
-            <circle cx="340" cy="444" r="12"/><circle cx="480" cy="444" r="12"/>
-
-            <circle cx="760" cy="444" r="12"/><circle cx="880" cy="444" r="12"/><circle cx="870" cy="560" r="14"/>
-
-          </g>
-
-          <g style="color:#22d3ee">
-
-            <use href="#i-temp" x="334" y="438" width="12" height="12"/><use href="#i-temp" x="474" y="438" width="12" height="12"/>
-
-            <use href="#i-temp" x="754" y="438" width="12" height="12"/><use href="#i-temp" x="874" y="438" width="12" height="12"/>
-
-            <use href="#i-temp" x="863" y="553" width="14" height="14"/></g>
-
-        </g>
-
-        <g id="T-climate" class="lbls railtxt" fill="#8feaf8" opacity="0">
-
-          <text x="348" y="430" data-en="ZONE BUS · 5 sensors on one line">ZONE BUS · เซนเซอร์ 5 โซนบนเส้นเดียว</text>
-
-          <text x="890" y="566" data-en="setpoint from Gateway">setpoint จาก Gateway</text>
-
-        </g>
-
-
-        <!-- ===== ④ DATA (dotted) ===== -->
-
-        <g id="L-data" class="lyg" fill="none" stroke="#a855f7" stroke-linecap="round" stroke-width="2.6">
-
-          <path d="M270 750 V706" stroke-dasharray="1 6"/>
-
-          <path d="M420 750 V706" stroke-dasharray="1 6"/>
-
-          <path d="M668 750 V706" stroke-dasharray="1 6"/>
-
-          <path d="M520 444 V664 q16 8 0 16 V706" stroke-dasharray="1 6"/>
-
-          <path class="flow" d="M270 706 H830 V748" stroke-dasharray="1 6" marker-end="url(#aD)"/>
-
-          <path class="flow" d="M862 780 H943" stroke-dasharray="1 6" marker-end="url(#aD)"/>
-
-          <path class="flow" d="M1007 780 H1080 V96 H1072" stroke-dasharray="1 6" marker-end="url(#aD)" marker-start="url(#aDs)"/>
-
-          <g fill="#a855f7" stroke="none">
-
-            <circle cx="270" cy="706" r="4.5"/><circle cx="420" cy="706" r="4.5"/>
-
-            <circle cx="520" cy="706" r="4.5"/><circle cx="668" cy="706" r="4.5"/>
-
-          </g>
-
-          <g class="bdgc" stroke="#a855f7">
-
-            <circle cx="570" cy="706" r="14"/><circle cx="902" cy="780" r="14"/><circle cx="1080" cy="400" r="14"/>
-
-          </g>
-
-          <g style="color:#a855f7"><use href="#i-signal" x="563" y="699" width="14" height="14"/>
-
-            <use href="#i-signal" x="895" y="773" width="14" height="14"/>
-
-            <use href="#i-signal" x="1073" y="393" width="14" height="14"/></g>
-
-        </g>
-
-        <g id="T-data" class="lbls railtxt" fill="#d8b4fe" opacity="0">
-
-          <text x="300" y="696" data-en="DATA RAIL · Modbus/RS485 · every 1 s">DATA RAIL · Modbus/RS485 · ทุก 1 วินาที</text>
-
-          <text x="880" y="772" data-en="consolidated dataset">ชุดข้อมูลรวม</text>
-
-          <text x="1066" y="406" text-anchor="end" data-en="Cloud sync ↕ app command">Cloud sync ↕ คำสั่งจากแอป</text>
-
-        </g>
-
-
-        <!-- ===================== ICON NODES ===================== -->
-
+        <!-- ===== HOTSPOTS + NODE LABELS ===== -->
         <g id="hotspots">
-
-          <g class="hs" data-id="solar">
-
-            <rect class="tglow" x="214" y="140" width="72" height="72" rx="20" fill="#ffb020" opacity="0"/>
-
-            <rect class="tile" x="220" y="146" width="60" height="60" rx="17" stroke="#ffb020"/>
-
-            <use href="#i-solar" x="234" y="160" width="32" height="32" style="color:#ffb020"/>
-
-            <text class="tlbl" x="250" y="232" text-anchor="middle" data-en="① Solar array">① แผงโซลาร์</text>
-
-            <text class="tsub" x="250" y="250" text-anchor="middle">13.2 kWp · 24 panels</text>
-
-          </g>
-
-          <g class="hs" data-id="collector">
-
-            <rect class="tglow" x="609" y="82" width="72" height="72" rx="20" fill="#ff4d4d" opacity="0"/>
-
-            <rect class="tile" x="615" y="88" width="60" height="60" rx="17" stroke="#ff4d4d"/>
-
-            <use href="#i-heat" x="629" y="102" width="32" height="32" style="color:#ff4d4d"/>
-
-            <text class="tlbl" x="645" y="70" text-anchor="middle" data-en="③ Solar thermal">③ แผงรับความร้อน</text>
-
-            <text class="tsub" x="645" y="52" text-anchor="middle">4 m² · 78 % eff.</text>
-
-          </g>
-
-          <g class="hs" data-id="wind">
-
-            <rect class="tglow" x="884" y="140" width="72" height="72" rx="20" fill="#ffb020" opacity="0"/>
-
-            <rect class="tile" x="890" y="146" width="60" height="60" rx="17" stroke="#ffb020"/>
-
-            <use href="#i-wind" x="904" y="160" width="32" height="32" style="color:#ffb020"/>
-
-            <text class="tlbl" x="920" y="232" text-anchor="middle" data-en="② Wind turbine">② กังหันลม</text>
-
-            <text class="tsub" x="920" y="250" text-anchor="middle">1.5 kW · VAWT</text>
-
-          </g>
-
-          <g class="hs" data-id="app">
-
-            <rect class="tglow" x="1004" y="60" width="72" height="72" rx="20" fill="#a855f7" opacity="0"/>
-
-            <rect class="tile" x="1010" y="66" width="60" height="60" rx="17" stroke="#a855f7"/>
-
-            <use href="#i-app" x="1024" y="80" width="32" height="32" style="color:#a855f7"/>
-
-            <text class="tlbl" x="1040" y="152" text-anchor="middle" data-en="⑪ Solar Home App">⑪ Solar Home App</text>
-
-            <text class="tsub" x="1040" y="170" text-anchor="middle">iOS · Android · Web</text>
-
-          </g>
-
-          <g class="hs" data-id="thermo">
-
-            <rect class="tglow" x="584" y="354" width="72" height="72" rx="20" fill="#22d3ee" opacity="0"/>
-
-            <rect class="tile" x="590" y="360" width="60" height="60" rx="17" stroke="#22d3ee"/>
-
-            <use href="#i-thermo" x="604" y="374" width="32" height="32" style="color:#22d3ee"/>
-
-            <text class="tlbl" x="620" y="348" text-anchor="middle" data-en="⑨ Thermostat zones">⑨ Thermostat Zone</text>
-
-            <text class="tsub" x="620" y="330" text-anchor="middle">5 zones · ±0.3 °C</text>
-
-          </g>
-
-          <g class="hs" data-id="inverter">
-
-            <rect class="tglow" x="214" y="744" width="72" height="72" rx="20" fill="#ffb020" opacity="0"/>
-
-            <rect class="tile" x="220" y="750" width="60" height="60" rx="17" stroke="#ffb020"/>
-
-            <use href="#i-inverter" x="234" y="764" width="32" height="32" style="color:#ffb020"/>
-
-            <text class="tlbl" x="250" y="840" text-anchor="middle" data-en="④ Hybrid inverter">④ อินเวอร์เตอร์</text>
-
-            <text class="tsub" x="250" y="858" text-anchor="middle">10 kW · 97.6 %</text>
-
-          </g>
-
-          <g class="hs" data-id="battery">
-
-            <rect class="tglow" x="384" y="744" width="72" height="72" rx="20" fill="#34d399" opacity="0"/>
-
-            <rect class="tile" x="390" y="750" width="60" height="60" rx="17" stroke="#34d399"/>
-
-            <use href="#i-battery" x="404" y="764" width="32" height="32" style="color:#34d399"/>
-
-            <text class="tlbl" x="420" y="840" text-anchor="middle" data-en="⑩ LFP battery">⑩ แบตเตอรี่ LFP</text>
-
-            <text class="tsub" x="420" y="858" text-anchor="middle">15 kWh · 6,000 cyc</text>
-
-          </g>
-
-          <g class="hs" data-id="tank">
-
-            <rect class="tglow" x="609" y="744" width="72" height="72" rx="20" fill="#ff4d4d" opacity="0"/>
-
-            <rect class="tile" x="615" y="750" width="60" height="60" rx="17" stroke="#ff4d4d"/>
-
-            <use href="#i-tank" x="629" y="764" width="32" height="32" style="color:#ff4d4d"/>
-
-            <text class="tlbl" x="608" y="786" text-anchor="end" data-en="⑦ Hot-water cylinder">⑦ ถังน้ำร้อน</text>
-
-            <text class="tsub" x="608" y="804" text-anchor="end">300 L · 3-level sensor</text>
-
-          </g>
-
-          <g class="hs" data-id="logger">
-
-            <rect class="tglow" x="794" y="744" width="72" height="72" rx="20" fill="#a855f7" opacity="0"/>
-
-            <rect class="tile" x="800" y="750" width="60" height="60" rx="17" stroke="#a855f7"/>
-
-            <use href="#i-logger" x="814" y="764" width="32" height="32" style="color:#a855f7"/>
-
-            <text class="tlbl" x="830" y="840" text-anchor="middle" data-en="⑤ Data logger">⑤ Data-logging Unit</text>
-
-            <text class="tsub" x="830" y="858" text-anchor="middle">32 ch · 1 s · 90 days</text>
-
-          </g>
-
-          <g class="hs" data-id="gateway">
-
-            <rect class="tglow" x="939" y="744" width="72" height="72" rx="20" fill="#a855f7" opacity="0"/>
-
-            <rect class="tile" x="945" y="750" width="60" height="60" rx="17" stroke="#a855f7"/>
-
-            <use href="#i-gateway" x="959" y="764" width="32" height="32" style="color:#a855f7"/>
-
-            <text class="tlbl" x="975" y="840" text-anchor="middle" data-en="⑥ Smart Gateway">⑥ Smart Gateway</text>
-
-            <text class="tsub" x="975" y="858" text-anchor="middle">edge CPU · 7-day API</text>
-
-          </g>
-
-          <g class="hs" data-id="store">
-
-            <rect class="tglow" x="364" y="869" width="72" height="72" rx="20" fill="#ff4d4d" opacity="0"/>
-
-            <rect class="tile" x="370" y="875" width="60" height="60" rx="17" stroke="#ff4d4d"/>
-
-            <use href="#i-store" x="384" y="889" width="32" height="32" style="color:#ff4d4d"/>
-
-            <text class="tlbl" x="446" y="901" data-en="⑧ Underground store">⑧ ถังกักเก็บใต้ดิน</text>
-
-            <text class="tsub" x="446" y="919">1,000 L · 72 h · 1.8 m</text>
-
-          </g>
-
+          <g class="hs" data-id="solar"><circle class="pulse" cx="330" cy="204" r="10" fill="#ffb020"/><circle class="core" cx="330" cy="204" r="10" fill="#ffb020" stroke="#070b14" stroke-width="3.5"/><text class="nodelbl" x="350" y="198">① แผงโซลาร์ 13.2 kWp</text></g>
+          <g class="hs" data-id="wind"><circle class="pulse" cx="772" cy="132" r="10" fill="#ffb020"/><circle class="core" cx="772" cy="132" r="10" fill="#ffb020" stroke="#070b14" stroke-width="3.5"/><text class="nodelbl" x="792" y="126">② กังหันลม 1.5 kW</text></g>
+          <g class="hs" data-id="collector"><circle class="pulse" cx="596" cy="196" r="10" fill="#ff4d4d"/><circle class="core" cx="596" cy="196" r="10" fill="#ff4d4d" stroke="#070b14" stroke-width="3.5"/><text class="nodelbl" x="616" y="190">③ แผงรับความร้อน 4 m²</text></g>
+          <g class="hs" data-id="inverter"><circle class="pulse" cx="286" cy="498" r="10" fill="#ffb020"/><circle class="core" cx="286" cy="498" r="10" fill="#ffb020" stroke="#070b14" stroke-width="3.5"/><text class="nodelbl" x="206" y="538">④ ไฮบริดอินเวอร์เตอร์</text></g>
+          <g class="hs" data-id="logger"><circle class="pulse" cx="370" cy="498" r="10" fill="#a855f7"/><circle class="core" cx="370" cy="498" r="10" fill="#a855f7" stroke="#070b14" stroke-width="3.5"/><text class="nodelbl" x="330" y="566">⑤ Data-logging Unit</text></g>
+          <g class="hs" data-id="gateway"><circle class="pulse" cx="430" cy="498" r="10" fill="#a855f7"/><circle class="core" cx="430" cy="498" r="10" fill="#a855f7" stroke="#070b14" stroke-width="3.5"/><text class="nodelbl" x="404" y="594">⑥ Smart Gateway</text></g>
+          <g class="hs" data-id="tank"><circle class="pulse" cx="520" cy="492" r="10" fill="#ff4d4d"/><circle class="core" cx="520" cy="492" r="10" fill="#ff4d4d" stroke="#070b14" stroke-width="3.5"/><text class="nodelbl" x="540" y="486">⑦ ถังน้ำร้อน 300 L</text></g>
+          <g class="hs" data-id="store"><circle class="pulse" cx="520" cy="698" r="10" fill="#ff4d4d"/><circle class="core" cx="520" cy="698" r="10" fill="#ff4d4d" stroke="#070b14" stroke-width="3.5"/><text class="nodelbl" x="542" y="692">⑧ ถังกักเก็บใต้ดิน 1,000 L</text></g>
+          <g class="hs" data-id="thermo"><circle class="pulse" cx="690" cy="386" r="10" fill="#22d3ee"/><circle class="core" cx="690" cy="386" r="10" fill="#22d3ee" stroke="#070b14" stroke-width="3.5"/><text class="nodelbl" x="710" y="380">⑨ Thermostat Zone</text></g>
+          <g class="hs" data-id="battery"><circle class="pulse" cx="470" cy="600" r="10" fill="#34d399"/><circle class="core" cx="470" cy="600" r="10" fill="#34d399" stroke="#070b14" stroke-width="3.5"/><text class="nodelbl" x="180" y="644">⑩ แบตเตอรี่ LFP 15 kWh</text></g>
+          <g class="hs" data-id="app"><circle class="pulse" cx="972" cy="130" r="10" fill="#a855f7"/><circle class="core" cx="972" cy="130" r="10" fill="#a855f7" stroke="#070b14" stroke-width="3.5"/><text class="nodelbl" x="846" y="80">⑪ Solar Home App</text></g>
         </g>
-
       </svg>
-
     </div>
 
-
     <aside class="insp" id="insp">
-
-      <div class="empty" id="emptyState" data-en="◈<br>Tap any icon on the blueprint<br>to see its specifications,<br>what it receives, what it sends,<br>and the benefit it delivers.">◈<br>แตะไอคอนใดก็ได้บนผัง<br>เพื่อดูสเปก · รับเข้าจากอะไร<br>ส่งต่อไปไหน · ได้ผลลัพธ์อะไร</div>
-
+      <div class="empty" id="emptyState" data-en="◈<br>Select a numbered node<br>to view its specifications,<br>what it receives, what it sends,<br>and the benefit it delivers.">◈<br>เลือกจุดที่มีหมายเลขบนผัง<br>เพื่อดูสเปก · รับเข้าจากอะไร<br>ส่งต่อไปไหน · และได้ผลลัพธ์อะไร</div>
       <div id="inspBody" style="display:none"></div>
-
     </aside>
-
   </div>
-
 </section>
-
 
 <!-- ============ FLOW CHAINS ============ -->
 <section id="flows" class="wrap reveal">
@@ -968,7 +539,7 @@ footer{border-top:1px solid var(--line);padding:52px 0;text-align:center;color:v
       <button class="btn btn-p" onclick="closePdf()">✕</button>
     </div>
     <div class="mbody" id="pdfBody">
-      <iframe id="pdfFrame" src="https://drive.google.com/file/d/1lxk89E2N7Cm5kFxCphGqcuNHhDQ1HDsQ/preview" style="width: 100%; height: 100%; min-height: 70vh; border: none;"></iframe>
+      <iframe id="pdfFrame" style="display:none"></iframe>
       <div class="drop" id="pdfDrop">
         <div class="box" id="pdfBox">
           <div class="ic">📄</div>
